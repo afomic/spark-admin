@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">SparkAdmin</string>
+    <string name="select_file">Select File</string>
+    <string-array name="file_type">
+        <item>Select File type</item>
+        <item>PDF</item>
+        <item>Power point</item>
+        <item>Doc file</item>
+    </string-array>
+    <string-array name="post_type">
+        <item>File Post</item>
+        <item>Blog Post</item>
+    </string-array>
+</resources>

@@ -1,0 +1,115 @@
+{
+  "project_info": {
+    "project_number": "994361411458",
+    "firebase_url": "https://spark-318cf.firebaseio.com",
+    "project_id": "spark-318cf",
+    "storage_bucket": "spark-318cf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:994361411458:android:d68f13fc74e012a7",
+        "android_client_info": {
+          "package_name": "com.afomic.spark"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "994361411458-egafref9g3im07ca7mqpvlhif0buione.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.afomic.spark",
+            "certificate_hash": "24722e110244fcb4da0ea26a0df176cd257d32b5"
+          }
+        },
+        {
+          "client_id": "994361411458-0k03pj61tp7cjnbflfqf80uh1464230h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.afomic.spark",
+            "certificate_hash": "ddcba24e1ff26e0438e59813fa51bc7eb7c84fe3"
+          }
+        },
+        {
+          "client_id": "994361411458-sjdab51it7flufdu7budbajvvrldvlue.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7GwI1aqby-SsoFJ15F-vJ9ZXY3hLRyXA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "994361411458-sjdab51it7flufdu7budbajvvrldvlue.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:994361411458:android:9a85fc2e7bc1b4b5",
+        "android_client_info": {
+          "package_name": "com.afomic.sparkadmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "994361411458-rvctep5q2vl49unhlhsoc63u5qjqil8m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.afomic.sparkadmin",
+            "certificate_hash": "24722e110244fcb4da0ea26a0df176cd257d32b5"
+          }
+        },
+        {
+          "client_id": "994361411458-4p7nohcjvhkf1nfqtn5vuhp0ric64o4m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.afomic.sparkadmin",
+            "certificate_hash": "ddcba24e1ff26e0438e59813fa51bc7eb7c84fe3"
+          }
+        },
+        {
+          "client_id": "994361411458-sjdab51it7flufdu7budbajvvrldvlue.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7GwI1aqby-SsoFJ15F-vJ9ZXY3hLRyXA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "994361411458-sjdab51it7flufdu7budbajvvrldvlue.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

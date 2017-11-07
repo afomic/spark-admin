@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.afomic.sparkadmin.NewBlogActivity">
+    <ImageView
+        android:id="@+id/imv_blog_picture"
+        android:layout_width="match_parent"
+        android:src="@drawable/upload"
+        android:layout_height="180dp"/>
+    <EditText
+        android:padding="8dp"
+        android:hint="Enter Title"
+        android:textSize="20sp"
+        android:id="@+id/edt_blog_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <EditText
+        android:padding="8dp"
+        android:gravity="start|top"
+        android:id="@+id/edt_blog_body"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>
