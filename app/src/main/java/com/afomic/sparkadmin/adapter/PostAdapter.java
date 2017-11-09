@@ -1,6 +1,7 @@
 package com.afomic.sparkadmin.adapter;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -11,8 +12,13 @@ import android.widget.TextView;
 
 
 import com.afomic.sparkadmin.R;
+import com.afomic.sparkadmin.model.BigSizeTextElement;
+import com.afomic.sparkadmin.model.BlogElement;
 import com.afomic.sparkadmin.model.BlogPost;
+import com.afomic.sparkadmin.model.NormalSizeTextElement;
+import com.afomic.sparkadmin.util.ElementParser;
 import com.afomic.sparkadmin.util.GlideApp;
+import com.afomic.sparkadmin.util.SpringParser;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
@@ -26,6 +32,9 @@ import java.util.Locale;
 public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
     private ArrayList<BlogPost> mBlogPosts;
+    private Typeface mediumFont,largeFont;
+    private SpringParser mSpringParser;
+
     public interface BlogPostListener{
         void OnFileBlogPostClick(String fileUrl,String filename);
         void onBlogBlogPostClick(BlogPost BlogPost);
@@ -35,6 +44,9 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         mBlogPosts=BlogPosts;
         mListener=(BlogPostListener) context;
         mContext=context;
+        mSpringParser=new SpringParser();
+        mediumFont=Typeface.createFromAsset(mContext.getAssets(), "font/medium.ttf");
+        largeFont=Typeface.createFromAsset(mContext.getAssets(), "font/large.ttf");
     }
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -56,6 +68,15 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             mHolder.blogTitle.setText(tempBlogPost.getTitle());
             mHolder.BlogPosterNameTextView.setText(tempBlogPost.getPosterName());
             mHolder.BlogPostTime.setText(time);
+            //use the first normal text as the summary of the blog
+            ArrayList<BlogElement> blogElements= ElementParser.fromHtml(tempBlogPost.getBody());
+            NormalSizeTextElement firstText=getFirstNormalText(blogElements);
+            if(firstText!=null){
+                String firstTextBody=firstText.getBody();
+                mHolder.blogDescription.setText(mSpringParser.parseString(firstTextBody));
+            }else {
+                mHolder.blogDescription.setText("");
+            }
 
             mHolder.BlogPostTime.setText(time);
             GlideApp.with(mContext)
@@ -66,9 +87,8 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     .load(tempBlogPost.getPosterIconUrl())
                     .placeholder(R.drawable.default_logo)
                     .into(mHolder.BlogPosterIcon);
-            String shortDescription=String.format(Locale.ENGLISH,"%s ..",
-                    tempBlogPost.getBody().substring(0,40));
-            mHolder.blogDescription.setText(shortDescription);
+
+
 
         }else {
             FileViewHolder mHolder=(FileViewHolder) holder;
@@ -108,6 +128,8 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             BlogPostTime=(TextView) itemView.findViewById(R.id.tv_post_time);
             fileName=(TextView) itemView.findViewById(R.id.tv_file_name);
             itemView.setOnClickListener(this);
+            fileName.setTypeface(largeFont);
+            BlogPosterNameTextView.setTypeface(largeFont);
         }
 
         @Override
@@ -128,6 +150,10 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             blogImage=(ImageView) itemView.findViewById(R.id.imv_blog_picture);
             blogTitle=(TextView) itemView.findViewById(R.id.tv_blog_title);
             blogDescription=(TextView) itemView.findViewById(R.id.tv_blog_description);
+
+            blogTitle.setTypeface(largeFont);
+            blogDescription.setTypeface(mediumFont);
+            BlogPosterNameTextView.setTypeface(largeFont);
             itemView.setOnClickListener(this);
 
         }
@@ -138,6 +164,14 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             mListener.onBlogBlogPostClick(blogBlogPost);
 
         }
+    }
+    private NormalSizeTextElement getFirstNormalText(ArrayList<BlogElement> blogElements){
+        for(BlogElement element:blogElements){
+            if(element.getType()==BlogElement.Type.NORMAL_SIZE_TEXT){
+                return (NormalSizeTextElement) element;
+            }
+        }
+        return null;
     }
 
 }

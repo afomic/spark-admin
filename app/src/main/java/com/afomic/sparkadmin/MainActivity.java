@@ -1,7 +1,13 @@
 package com.afomic.sparkadmin;
 
+import android.*;
+import android.Manifest;
+import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +28,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -62,8 +69,8 @@ public class MainActivity extends AppCompatActivity implements PostAdapter.BlogP
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 BlogPost mPost=dataSnapshot.getValue(BlogPost.class);
-                mPostList.add(mPost);
-                mAdapter.notifyDataSetChanged();
+                mPostList.add(0,mPost);
+                mAdapter.notifyItemInserted(0);
             }
 
             @Override
@@ -90,7 +97,24 @@ public class MainActivity extends AppCompatActivity implements PostAdapter.BlogP
 
     @Override
     public void OnFileBlogPostClick(String fileUrl, String filename) {
+        File direct = new File(Environment.getExternalStorageDirectory()
+                + "/Spark/doc");
 
+        if (!direct.exists()) {
+            direct.mkdirs();
+        }
+        Uri file_uri = Uri.parse(fileUrl);
+        DownloadManager downloadManager=(DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
+        DownloadManager.Request request = new DownloadManager.Request(file_uri);
+        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
+        request.setAllowedOverRoaming(false);
+        request.setTitle("Spark Downloading " + filename);
+        request.setDescription("Downloading " + filename);
+        request.setVisibleInDownloadsUi(true);
+        request.setDestinationInExternalPublicDir("Spark/doc",
+                filename);
+
+        long refid = downloadManager.enqueue(request);
     }
 
     @Override
@@ -106,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements PostAdapter.BlogP
                 PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                     new String[] {
-                            android.Manifest.permission.READ_EXTERNAL_STORAGE
+                            android.Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
                     },100);
         }
 

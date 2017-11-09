@@ -15,14 +15,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
-                android:padding="4dp"
+                android:paddingTop="4dp"
                 android:id="@+id/imv_post_icon"
                 android:src="@drawable/sample"
                 android:layout_marginRight="8dp"
-                android:layout_width="32dp"
-                android:layout_height="32dp"/>
+                android:layout_width="42dp"
+                android:layout_height="42dp"/>
             <TextView
-                android:textStyle="bold"
+                android:padding="4dp"
                 android:id="@+id/tv_poster_name"
                 android:textSize="16sp"
                 android:layout_toRightOf="@id/imv_post_icon"
@@ -45,7 +45,7 @@
             android:id="@+id/imv_file_icon"
             android:background="#7440c4ff"
             android:padding="40dp"
-            android:src="@drawable/pdf_logo"/>
+            android:src="@drawable/ppt"/>
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"

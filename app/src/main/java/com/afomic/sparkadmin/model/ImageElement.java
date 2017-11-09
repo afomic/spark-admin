@@ -7,6 +7,7 @@ import com.google.firebase.database.Exclude;
 
 /**
  * Created by afomic on 11/4/17.
+ *
  */
 
 public class ImageElement implements BlogElement {

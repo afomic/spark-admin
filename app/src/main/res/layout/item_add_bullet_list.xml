@@ -13,7 +13,7 @@
         android:layout_marginLeft="8dp"
         android:layout_width="10dp"
         android:layout_height="10dp"/>
-    <EditText
+    <com.afomic.sparkadmin.util.CustomEditText
         android:layout_width="match_parent"
         android:text="ddfdfd"
         android:textSize="16sp"

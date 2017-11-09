@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
     <EditText
         android:hint="File Title"
-        android:padding="4dp"
+        android:padding="8dp"
         android:id="@+id/edt_file_title"
         android:background="@drawable/box"
         android:layout_margin="8dp"
@@ -40,6 +40,7 @@
     <Button
         android:id="@+id/btn_submit"
         android:hint="Submit"
+        android:backgroundTint="@color/colorAccent"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>

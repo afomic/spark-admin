@@ -13,7 +13,7 @@
         android:layout_height="200dp"/>
     <EditText
         android:hint="Post Title"
-        android:layout_margin="16dp"
+        android:layout_marginTop="8dp"
         android:padding="8dp"
         android:id="@+id/edt_post_title"
         android:background="@drawable/edit_text_normal"
@@ -22,21 +22,26 @@
     <LinearLayout
         android:orientation="horizontal"
         android:gravity="end"
-        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
             android:text="Cancel"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
             android:padding="8dp"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:layout_marginRight="8dp"
             android:id="@+id/tv_action_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <TextView
             android:text="Publish"
             android:padding="8dp"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Body1"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
             android:id="@+id/tv_action_publish"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 

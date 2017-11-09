@@ -1,5 +1,6 @@
 package com.afomic.sparkadmin;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -10,9 +11,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.afomic.sparkadmin.adapter.CreatePostAdapter;
+import com.afomic.sparkadmin.fragment.UploadBlogDialog;
 import com.afomic.sparkadmin.model.ActionListener;
 import com.afomic.sparkadmin.model.BigSizeTextElement;
 import com.afomic.sparkadmin.model.BlogElement;
@@ -35,7 +39,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CreateBlogActivity extends AppCompatActivity implements CreatePostAdapter.CreatePostCallback{
+public class CreateBlogActivity extends AppCompatActivity implements
+        CreatePostAdapter.CreatePostCallback,UploadBlogDialog.UploadDialogListener{
     @BindView(R.id.rv_create_blog)
     RecyclerView createBlogList;
 
@@ -44,14 +49,13 @@ public class CreateBlogActivity extends AppCompatActivity implements CreatePostA
 
     ProgressDialog mProgressDialog;
 
-//    private final String BUNDLE_BLOG_ELEMENTS="elements";
-
-    private static final int GET_IMAGE_REQUEST_CODE=102;
-
     private ActionListener mActionListener=new ActionListener() {
         @Override
         public void onDelete(int position) {
-            Toast.makeText(CreateBlogActivity.this,"On delete Called",Toast.LENGTH_SHORT).show();
+            if(position!=0){
+                mBlogElements.remove(position);
+                mAdapter.notifyItemRemoved(position);
+            }
 
         }
 
@@ -124,6 +128,7 @@ public class CreateBlogActivity extends AppCompatActivity implements CreatePostA
     }
     @OnClick(R.id.btn_image)
     public void imageClicked(){
+        hideKeyboard(this);
         CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)
                 .setAspectRatio(4,3)
@@ -173,14 +178,27 @@ public class CreateBlogActivity extends AppCompatActivity implements CreatePostA
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==R.id.menu_submit_post){
-            String postBody= ElementParser.toHtml(mBlogElements);
-            BlogPost post=new BlogPost();
-            post.setBody(postBody);
-            post.setType(BlogPost.Type.BLOG);
-            mProgressDialog.show();
-            uploadPost(post);
+            if(isValidEntry()){
+                hideKeyboard(this);
+                showTitleDialog();
+            }
+
         }
         return super.onOptionsItemSelected(item);
+    }
+    public void showTitleDialog(){
+        String bigText="";
+        Uri imageUri=null;
+        ImageElement firstImageElement=getFirstImage(mBlogElements);
+        BigSizeTextElement bigSizeTextElement=getFirstBigText(mBlogElements);
+        if(bigSizeTextElement!=null){
+            bigText=bigSizeTextElement.getBody();
+        }
+        if (firstImageElement!=null){
+            imageUri=firstImageElement.getImageUri();
+        }
+        UploadBlogDialog dialog=UploadBlogDialog.newInstance(bigText,imageUri);
+        dialog.show(getSupportFragmentManager(),null);
     }
     public void uploadPost(BlogPost post){
         DatabaseReference blogRef=
@@ -193,7 +211,73 @@ public class CreateBlogActivity extends AppCompatActivity implements CreatePostA
             }
         });
 
+    }
+    private ImageElement getFirstImage(ArrayList<BlogElement> blogElements){
+        for(BlogElement element:blogElements){
+            if(element.getType()==BlogElement.Type.IMAGE){
+                return (ImageElement) element;
+            }
+        }
+        return null;
+    }
+    private BigSizeTextElement getFirstBigText(ArrayList<BlogElement> blogElements){
+        for(BlogElement element:blogElements){
+            if(element.getType()==BlogElement.Type.BIG_SIZE_TEXT){
+                return (BigSizeTextElement) element;
+            }
+        }
+        return null;
+    }
 
-
+    @Override
+    public void onTitleSubmitted(String title) {
+        BlogPost post=new BlogPost();
+        String postBody= ElementParser.toHtml(mBlogElements);
+        ImageElement element=getFirstImage(mBlogElements);
+        if(element!=null){
+            post.setPictureUrl(element.getImageUrl());
+        }
+        post.setBody(postBody);
+        post.setTitle(title);
+        post.setPosterName("President");
+        post.setType(BlogPost.Type.BLOG);
+        mProgressDialog.show();
+        uploadPost(post);
+    }
+    public boolean allImageUploaded(ArrayList<BlogElement> blogElements){
+        for(BlogElement element:blogElements){
+            if(element.getType()==BlogElement.Type.IMAGE){
+                ImageElement imageElement=(ImageElement) element;
+                if (!imageElement.isUploaded()){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    public boolean isValidEntry(){
+        if(!allImageUploaded(mBlogElements)){
+            Toast.makeText(CreateBlogActivity.this,
+                    "Some Images Are Still Uploading",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        if(mBlogElements.size()<2){
+            Toast.makeText(CreateBlogActivity.this,
+                    "You can not submit empty post",
+                    Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

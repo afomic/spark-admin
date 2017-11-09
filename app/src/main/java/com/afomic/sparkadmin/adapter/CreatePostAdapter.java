@@ -8,8 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.util.SparseArray;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +27,7 @@ import com.afomic.sparkadmin.model.BulletListTextElement;
 import com.afomic.sparkadmin.model.GenericViewHolder;
 import com.afomic.sparkadmin.model.ImageElement;
 import com.afomic.sparkadmin.model.NormalSizeTextElement;
+import com.afomic.sparkadmin.util.CustomEditText;
 import com.afomic.sparkadmin.util.GlideApp;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -145,13 +145,14 @@ public class CreatePostAdapter extends RecyclerView.Adapter<GenericViewHolder>{
         }
     }
     public class AddNormalTextHolder extends GenericViewHolder{
-        EditText normalTextInput;
+        CustomEditText normalTextInput;
 
         public AddNormalTextHolder(View itemView) {
             super(itemView);
             normalTextInput=itemView.findViewById(R.id.edt_add_normal_text);
             normalTextInput.setTypeface(mediumFont);
             normalTextInput.addTextChangedListener(new MyTextWatch(normalTextInput));
+            normalTextInput.setOnKeyListener(new KeyListener(normalTextInput));
 
         }
 
@@ -164,13 +165,14 @@ public class CreatePostAdapter extends RecyclerView.Adapter<GenericViewHolder>{
         }
     }
     public class AddBigTextHolder extends GenericViewHolder{
-        EditText bigTextInput;
+        CustomEditText bigTextInput;
 
         public AddBigTextHolder(View itemView) {
             super(itemView);
             bigTextInput=itemView.findViewById(R.id.edt_add_big_text);
             bigTextInput.setTypeface(largeFont);
             bigTextInput.addTextChangedListener(new MyTextWatch(bigTextInput) );
+            bigTextInput.setOnKeyListener(new KeyListener(bigTextInput));
         }
 
         @Override
@@ -182,20 +184,29 @@ public class CreatePostAdapter extends RecyclerView.Adapter<GenericViewHolder>{
         }
     }
     public class AddBulletHolder extends GenericViewHolder{
-        EditText bulletListInput;
+        CustomEditText bulletListInput;
 
         public AddBulletHolder(View itemView) {
             super(itemView);
             bulletListInput=itemView.findViewById(R.id.edt_add_bullet_list);
             bulletListInput.setTypeface(italics);
             bulletListInput.addTextChangedListener(new MyTextWatch(bulletListInput) );
+            bulletListInput.setOnKeyListener(new KeyListener(bulletListInput));
         }
 
         @Override
         public void bindView(ActionListener listener) {
             BulletListTextElement bulletText=(BulletListTextElement) htmlList.get(getAdapterPosition());
             bulletListInput.setTag(getAdapterPosition());
-            bulletListInput.setText(bulletText.getBody());
+            final String text=bulletText.getBody();
+            bulletListInput.setText(text);
+
+            bulletListInput.post(new Runnable() {
+                @Override
+                public void run() {
+                    bulletListInput.setSelection(text.length());
+                }
+            });
             getFocus(bulletListInput,getAdapterPosition());
         }
     }
@@ -229,13 +240,6 @@ public class CreatePostAdapter extends RecyclerView.Adapter<GenericViewHolder>{
                 mActionListener.onEnter(position);
                 return;
             }
-
-            if(count==0&&s.toString().length()==0&&before>0){
-                //backspace on an empty editText
-                mActionListener.onDelete(position);
-
-            }
-
             switch (element.getType()){
 
                 case BlogElement.Type.BIG_SIZE_TEXT:
@@ -302,6 +306,25 @@ public class CreatePostAdapter extends RecyclerView.Adapter<GenericViewHolder>{
         }else {
             task.cancel();
         }
+
     }
+    public class KeyListener implements View.OnKeyListener{
+        CustomEditText mEditText;
+        public KeyListener(CustomEditText edt){
+            mEditText=edt;
+        }
+
+        @Override
+        public boolean onKey(View v, int keyCode, KeyEvent event) {
+            int textLength=mEditText.length();
+            if (event.getAction() == KeyEvent.ACTION_DOWN
+                    && event.getKeyCode() == KeyEvent.KEYCODE_DEL&&textLength==0) {
+                int position=(int) mEditText.getTag();
+                mActionListener.onDelete(position);
+            }
+            return false;
+        }
+    }
+
 
 }

@@ -90,6 +90,7 @@ public class NewFilePostActivity extends AppCompatActivity {
                             fileUrl=downloadUrl.toString();
                             BlogPost mPost=new BlogPost();
                             mPost.setTitle(fileTitle);
+                            mPost.setFileType(fileType);
                             mPost.setPosterName("President");
                             mPost.setFileUrl(fileUrl);
                             mPost.setType(BlogPost.Type.FILE);
