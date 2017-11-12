@@ -24,6 +24,7 @@ import com.afomic.sparkadmin.model.BlogPost;
 import com.afomic.sparkadmin.model.BulletListTextElement;
 import com.afomic.sparkadmin.model.ImageElement;
 import com.afomic.sparkadmin.model.NormalSizeTextElement;
+import com.afomic.sparkadmin.model.NumberListElement;
 import com.afomic.sparkadmin.util.ElementParser;
 import com.afomic.sparkadmin.util.GlideApp;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -42,13 +43,13 @@ import butterknife.OnClick;
 public class CreateBlogActivity extends AppCompatActivity implements
         CreatePostAdapter.CreatePostCallback,UploadBlogDialog.UploadDialogListener{
     @BindView(R.id.rv_create_blog)
-    RecyclerView createBlogList;
+    private RecyclerView createBlogList;
 
-    CreatePostAdapter mAdapter;
-    ArrayList<BlogElement> mBlogElements;
+    private CreatePostAdapter mAdapter;
+    private ArrayList<BlogElement> mBlogElements;
 
-    ProgressDialog mProgressDialog;
-
+    private ProgressDialog mProgressDialog;
+    private int numberListPosition=0;
     private ActionListener mActionListener=new ActionListener() {
         @Override
         public void onDelete(int position) {
@@ -100,34 +101,44 @@ public class CreateBlogActivity extends AppCompatActivity implements
     }
     @OnClick(R.id.btn_big_text)
     public void bigButtonClicked(){
+        resetNumberListPosition();
         BigSizeTextElement element=new BigSizeTextElement();
         mBlogElements.add(element);
         mAdapter.notifyDataSetChanged();
-        createBlogList.scrollToPosition(mBlogElements.size()-1);
+        scrollToBottom();
 
     }
     @OnClick(R.id.btn_bullet_list)
     public void bulletListClicked(){
+        resetNumberListPosition();
         BulletListTextElement bullet=new BulletListTextElement();
         mBlogElements.add(bullet);
         mAdapter.notifyDataSetChanged();
-        createBlogList.scrollToPosition(mBlogElements.size()-1);
+        scrollToBottom();
 
     }
     @OnClick(R.id.btn_number_list)
     public void numberedListClicked(){
+        numberListPosition+=1;
+        NumberListElement listElement=new NumberListElement(numberListPosition);
+        mBlogElements.add(listElement);
+        mAdapter.notifyDataSetChanged();
+        scrollToBottom();
 
     }
     @OnClick(R.id.btn_normal_text)
     public void normalTextClicked(){
+        resetNumberListPosition();
         NormalSizeTextElement element=new NormalSizeTextElement();
         mBlogElements.add(element);
         mAdapter.notifyDataSetChanged();
-        createBlogList.scrollToPosition(mBlogElements.size()-1);
+        scrollToBottom();
+
 
     }
     @OnClick(R.id.btn_image)
     public void imageClicked(){
+        resetNumberListPosition();
         hideKeyboard(this);
         CropImage.activity()
                 .setGuidelines(CropImageView.Guidelines.ON)
@@ -279,5 +290,13 @@ public class CreateBlogActivity extends AppCompatActivity implements
             view = new View(activity);
         }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+    public void resetNumberListPosition(){
+        if(numberListPosition!=0){
+            numberListPosition=0;
+        }
+    }
+    public void scrollToBottom(){
+        createBlogList.scrollToPosition(mBlogElements.size()-1);
     }
 }

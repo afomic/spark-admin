@@ -16,6 +16,7 @@ public interface BlogElement{
         public static final int NORMAL_SIZE_TEXT=2;
         public static final int BULLET_LIST_TEXT=3;
         public static final int IMAGE=4;
+        public static final int NUMBER_LIST_TEXT=5;
     }
 
 }

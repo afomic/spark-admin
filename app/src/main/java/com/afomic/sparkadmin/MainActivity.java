@@ -3,8 +3,10 @@ package com.afomic.sparkadmin;
 import android.*;
 import android.Manifest;
 import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Environment;
@@ -14,9 +16,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
+import android.util.SparseLongArray;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.afomic.sparkadmin.adapter.PostAdapter;
 import com.afomic.sparkadmin.fragment.NewPostDialog;
@@ -30,6 +35,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -40,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements PostAdapter.BlogP
     CircleImageView posterIcon;
     ArrayList<BlogPost> mPostList;
     PostAdapter mAdapter;
+    private static Map<Long,String> downloadRef=new HashMap<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +59,11 @@ public class MainActivity extends AppCompatActivity implements PostAdapter.BlogP
         addPostImageView=(ImageView) findViewById(R.id.imv_add_post);
 
         mPostList=new ArrayList<>();
+
+
+        IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
+        registerReceiver(new DownloadBroadcastReciever(), filter);
+
 
         mAdapter=new PostAdapter(this,mPostList);
         RecyclerView.LayoutManager mLayoutManager=new LinearLayoutManager(this);
@@ -96,25 +109,24 @@ public class MainActivity extends AppCompatActivity implements PostAdapter.BlogP
     }
 
     @Override
-    public void OnFileBlogPostClick(String fileUrl, String filename) {
+    public void OnFileBlogPostClick(BlogPost blogPost) {
         File direct = new File(Environment.getExternalStorageDirectory()
                 + "/Spark/doc");
 
         if (!direct.exists()) {
             direct.mkdirs();
         }
-        Uri file_uri = Uri.parse(fileUrl);
+        Uri file_uri = Uri.parse(blogPost.getFileUrl());
         DownloadManager downloadManager=(DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
         DownloadManager.Request request = new DownloadManager.Request(file_uri);
         request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
         request.setAllowedOverRoaming(false);
-        request.setTitle("Spark Downloading " + filename);
-        request.setDescription("Downloading " + filename);
+        request.setTitle("Downloading " + blogPost.getTitle());
         request.setVisibleInDownloadsUi(true);
-        request.setDestinationInExternalPublicDir("Spark/doc",
-                filename);
+        request.setDestinationInExternalPublicDir("Spark/doc", blogPost.getTitle());
 
         long refid = downloadManager.enqueue(request);
+        downloadRef.put(refid,blogPost.getId());
     }
 
     @Override
@@ -130,9 +142,24 @@ public class MainActivity extends AppCompatActivity implements PostAdapter.BlogP
                 PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                     new String[] {
-                            android.Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
+                            android.Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE
                     },100);
         }
 
+    }
+    public String getFileName(BlogPost post){
+        String[] extension={".docx",".pdf",".pptx"};
+        return  post.getTitle()+extension[post.getFileType()];
+    }
+    public static class DownloadBroadcastReciever extends BroadcastReceiver{
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            long referenceId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+            String id=downloadRef.get(referenceId);
+            if(id!=null){
+                Toast.makeText(context,"File downloaded",Toast.LENGTH_SHORT).show();
+
+            }
+        }
     }
 }

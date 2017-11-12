@@ -85,12 +85,12 @@ public class NewFilePostActivity extends AppCompatActivity {
                         @SuppressWarnings("test")
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            @SuppressWarnings("VisibleForTests")
                             Uri downloadUrl = taskSnapshot.getDownloadUrl();
                             fileUrl=downloadUrl.toString();
                             BlogPost mPost=new BlogPost();
-                            mPost.setTitle(fileTitle);
+                            mPost.setTitle(fileUri.getLastPathSegment());
                             mPost.setFileType(fileType);
+                            mPost.setBody(fileTitle);
                             mPost.setPosterName("President");
                             mPost.setFileUrl(fileUrl);
                             mPost.setType(BlogPost.Type.FILE);

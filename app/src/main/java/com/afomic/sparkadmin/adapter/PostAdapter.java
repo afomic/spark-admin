@@ -35,11 +35,13 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Typeface mediumFont,largeFont;
     private SpringParser mSpringParser;
 
+    private int[] fileTypeImageId={R.drawable.doc,R.drawable.doc,R.drawable.pdf_logo,R.drawable.power};
+
     public interface BlogPostListener{
-        void OnFileBlogPostClick(String fileUrl,String filename);
-        void onBlogBlogPostClick(BlogPost BlogPost);
+        void OnFileBlogPostClick(BlogPost blogPost);
+        void onBlogBlogPostClick(BlogPost blogPost);
     }
-    BlogPostListener mListener;
+    private BlogPostListener mListener;
     public PostAdapter(Context context, ArrayList<BlogPost> BlogPosts){
         mBlogPosts=BlogPosts;
         mListener=(BlogPostListener) context;
@@ -92,13 +94,17 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         }else {
             FileViewHolder mHolder=(FileViewHolder) holder;
-            mHolder.fileName.setText(tempBlogPost.getTitle());
+            mHolder.fileName.setText(tempBlogPost.getBody());
             mHolder.BlogPostTime.setText(String.valueOf(tempBlogPost.getTimeStamp()));
             mHolder.BlogPostTime.setText(time);
 
-            Glide.with(mContext)
+            GlideApp.with(mContext)
                     .load(tempBlogPost.getPosterIconUrl())
+                    .placeholder(R.drawable.default_logo)
                     .into(mHolder.BlogPosterIcon);
+            GlideApp.with(mContext)
+                    .load(fileTypeImageId[tempBlogPost.getFileType()])
+                    .into(mHolder.fileIcon);
             mHolder.BlogPosterNameTextView.setText(tempBlogPost.getPosterName());
 
         }
@@ -135,7 +141,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         @Override
         public void onClick(View view) {
             BlogPost fileBlogPost=mBlogPosts.get(getAdapterPosition());
-            mListener.OnFileBlogPostClick(fileBlogPost.getFileUrl(),fileBlogPost.getTitle());
+            mListener.OnFileBlogPostClick(fileBlogPost);
         }
     }
     public class BlogViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -173,5 +179,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
         return null;
     }
+
+
 
 }

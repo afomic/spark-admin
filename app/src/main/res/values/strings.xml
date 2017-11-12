@@ -3,9 +3,9 @@
     <string name="select_file">Select File</string>
     <string-array name="file_type">
         <item>Select File type</item>
+        <item>Doc file</item>
         <item>PDF</item>
         <item>Power point</item>
-        <item>Doc file</item>
     </string-array>
     <string-array name="post_type">
         <item>File Post</item>
