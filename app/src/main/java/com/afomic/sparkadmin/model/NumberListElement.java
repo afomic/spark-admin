@@ -13,8 +13,8 @@ public class NumberListElement implements BlogElement {
 
     }
 
-    public int getPosition() {
-        return position;
+    public String getPosition() {
+        return position +".";
     }
 
     public void setPosition(int position) {

@@ -16,6 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -27,6 +28,7 @@ import com.afomic.sparkadmin.model.BulletListTextElement;
 import com.afomic.sparkadmin.model.GenericViewHolder;
 import com.afomic.sparkadmin.model.ImageElement;
 import com.afomic.sparkadmin.model.NormalSizeTextElement;
+import com.afomic.sparkadmin.model.NumberListElement;
 import com.afomic.sparkadmin.util.CustomEditText;
 import com.afomic.sparkadmin.util.GlideApp;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -89,6 +91,9 @@ public class CreatePostAdapter extends RecyclerView.Adapter<GenericViewHolder>{
             case BlogElement.Type.BULLET_LIST_TEXT:
                 View addBulletView = LayoutInflater.from(mContext).inflate(R.layout.item_add_bullet_list,parent,false);
                 return new AddBulletHolder(addBulletView);
+            case BlogElement.Type.NUMBER_LIST_TEXT:
+                View addNumberView = LayoutInflater.from(mContext).inflate(R.layout.item_add_number_list,parent,false);
+                return new AddNumberHolder(addNumberView);
         }
         return null;
     }
@@ -200,17 +205,32 @@ public class CreatePostAdapter extends RecyclerView.Adapter<GenericViewHolder>{
             bulletListInput.setTag(getAdapterPosition());
             final String text=bulletText.getBody();
             bulletListInput.setText(text);
-
-            bulletListInput.post(new Runnable() {
-                @Override
-                public void run() {
-                    bulletListInput.setSelection(text.length());
-                }
-            });
             getFocus(bulletListInput,getAdapterPosition());
         }
     }
-    public void showKeyboard(final EditText editText){
+    public class AddNumberHolder extends GenericViewHolder{
+        CustomEditText numberListInput;
+        TextView numberedListPosition;
+
+        public AddNumberHolder(View itemView) {
+            super(itemView);
+            numberListInput=itemView.findViewById(R.id.edt_number_list);
+            numberedListPosition=itemView.findViewById(R.id.tv_number_position);
+            numberListInput.setTypeface(italics);
+            numberListInput.addTextChangedListener(new MyTextWatch( numberListInput) );
+            numberListInput.setOnKeyListener(new KeyListener( numberListInput));
+        }
+
+        @Override
+        public void bindView(ActionListener listener) {
+            NumberListElement numberListElement=(NumberListElement) htmlList.get(getAdapterPosition());
+            numberListInput.setTag(getAdapterPosition());
+            numberListInput.setText(numberListElement.getBody());
+            numberedListPosition.setText(numberListElement.getPosition());
+            getFocus( numberListInput,getAdapterPosition());
+        }
+    }
+    private void showKeyboard(final EditText editText){
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -241,7 +261,6 @@ public class CreatePostAdapter extends RecyclerView.Adapter<GenericViewHolder>{
                 return;
             }
             switch (element.getType()){
-
                 case BlogElement.Type.BIG_SIZE_TEXT:
                     BigSizeTextElement bigText=(BigSizeTextElement) element;
                     bigText.setBody(s.toString());
@@ -253,6 +272,10 @@ public class CreatePostAdapter extends RecyclerView.Adapter<GenericViewHolder>{
                 case BlogElement.Type.BULLET_LIST_TEXT:
                     BulletListTextElement bulletText=(BulletListTextElement) element;
                     bulletText.setBody(s.toString());
+                    break;
+                case BlogElement.Type.NUMBER_LIST_TEXT:
+                   NumberListElement numberListElement=(NumberListElement) element;
+                    numberListElement.setBody(s.toString());
                     break;
             }
         }

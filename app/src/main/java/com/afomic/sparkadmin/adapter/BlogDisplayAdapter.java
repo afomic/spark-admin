@@ -18,6 +18,7 @@ import com.afomic.sparkadmin.model.BulletListTextElement;
 import com.afomic.sparkadmin.model.GenericViewHolder;
 import com.afomic.sparkadmin.model.ImageElement;
 import com.afomic.sparkadmin.model.NormalSizeTextElement;
+import com.afomic.sparkadmin.model.NumberListElement;
 import com.afomic.sparkadmin.util.GlideApp;
 import com.afomic.sparkadmin.util.SpringParser;
 import com.bumptech.glide.Glide;
@@ -60,6 +61,9 @@ public class BlogDisplayAdapter extends RecyclerView.Adapter<GenericViewHolder> 
             case BlogElement.Type.BULLET_LIST_TEXT:
                 View bullet= mInflater.inflate(R.layout.item_bullet_list,parent,false);
                 return new BulletListViewHolder(bullet);
+            case BlogElement.Type.NUMBER_LIST_TEXT:
+                View numberedView= mInflater.inflate(R.layout.item_number_list,parent,false);
+                return new NumberedListViewHolder(numberedView);
 
         }
         return null;
@@ -152,4 +156,25 @@ public class BlogDisplayAdapter extends RecyclerView.Adapter<GenericViewHolder> 
 
         }
     }
+    public class NumberedListViewHolder extends GenericViewHolder {
+        private TextView mNumberedTextView;
+        private TextView mNumberedPositionTextView;
+        public NumberedListViewHolder(View itemView) {
+            super(itemView);
+            mNumberedTextView=itemView.findViewById(R.id.tv_number);
+            mNumberedPositionTextView=itemView.findViewById(R.id.tv_number_position);
+
+            mNumberedTextView.setTypeface(italics);
+        }
+
+        @Override
+        public void bindView(ActionListener listener) {
+            int position=getAdapterPosition();
+            NumberListElement element=(NumberListElement) elementList.get(position);
+            mNumberedTextView.setText(element.getBody());
+            mNumberedPositionTextView.setText(element.getPosition());
+
+        }
+    }
+
 }
