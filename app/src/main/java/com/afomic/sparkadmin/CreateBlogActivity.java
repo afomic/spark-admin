@@ -43,7 +43,7 @@ import butterknife.OnClick;
 public class CreateBlogActivity extends AppCompatActivity implements
         CreatePostAdapter.CreatePostCallback,UploadBlogDialog.UploadDialogListener{
     @BindView(R.id.rv_create_blog)
-    private RecyclerView createBlogList;
+    RecyclerView createBlogList;
 
     private CreatePostAdapter mAdapter;
     private ArrayList<BlogElement> mBlogElements;
@@ -56,6 +56,7 @@ public class CreateBlogActivity extends AppCompatActivity implements
             if(position!=0){
                 mBlogElements.remove(position);
                 mAdapter.notifyItemRemoved(position);
+                numberListPosition-=1;
             }
 
         }
@@ -68,7 +69,13 @@ public class CreateBlogActivity extends AppCompatActivity implements
                 BulletListTextElement bulletElement=new BulletListTextElement();
                 mBlogElements.add(newPosition,bulletElement);
 
-            }else {
+            }else if(element.getType()==BlogElement.Type.NUMBER_LIST_TEXT){
+                numberListPosition+=1;
+                NumberListElement listElement=new NumberListElement(numberListPosition);
+                mBlogElements.add(listElement);
+                mAdapter.notifyDataSetChanged();
+
+            } else {
                 NormalSizeTextElement normalText=new NormalSizeTextElement();
                 mBlogElements.add(newPosition,normalText);
             }

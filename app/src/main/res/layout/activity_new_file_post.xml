@@ -1,48 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
     android:layout_height="match_parent">
-    <EditText
-        android:hint="File Title"
-        android:padding="8dp"
-        android:id="@+id/edt_file_title"
-        android:background="@drawable/box"
-        android:layout_margin="8dp"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <Spinner
-        android:layout_margin="8dp"
-        android:entries="@array/file_type"
-        android:id="@+id/spn_file_type"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
+        android:layout_margin="16dp"
+        android:layout_centerInParent="true"
         android:layout_height="wrap_content">
-        <Button
-            android:layout_margin="8dp"
-            android:id="@+id/btn_select_file"
-            android:hint="@string/select_file"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:id="@+id/tv_file_name"
-            android:layout_gravity="center"
-            android:textSize="18sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+        <LinearLayout
+            android:padding="8dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Create File Post"
+                android:textSize="24sp"
+                android:padding="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:hint="Enter file title"
+                android:padding="8dp"
+                android:id="@+id/edt_file_title"
+                android:background="@drawable/box"
+                android:layout_margin="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <Spinner
+                android:layout_margin="8dp"
+                android:entries="@array/file_type"
+                android:id="@+id/spn_file_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:layout_margin="8dp"
+                    android:id="@+id/btn_select_file"
+                    android:hint="@string/select_file"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/tv_file_name"
+                    android:layout_gravity="center"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_submit"
-        android:hint="Submit"
-        android:backgroundTint="@color/colorAccent"
-        android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+            <Button
+                android:id="@+id/btn_submit"
+                android:text="Submit"
+                android:textColor="@color/colorWhite"
+                android:backgroundTint="@color/colorAccent"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
 
-</LinearLayout>
+    </android.support.v7.widget.CardView>
+
+
+</RelativeLayout>

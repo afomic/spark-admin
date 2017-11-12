@@ -15,7 +15,7 @@
         android:id="@+id/edt_number_list"
         android:background="@android:color/transparent"
         android:textColor="@color/colorBlack"
-        android:inputType="textAutoComplete|textCapSentences"
+        android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
         android:textSize="16sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

@@ -6,4 +6,7 @@ package com.afomic.sparkadmin.util;
 
 public class Constant {
     public static final String EXTRA_BLOG_POST="post";
+    public static final String EXTRA_PROFILE="profile";
+    public static final String EXTRA_TYPE="type";
+
 }

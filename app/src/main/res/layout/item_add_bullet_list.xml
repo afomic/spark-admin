@@ -19,7 +19,7 @@
         android:textSize="16sp"
         android:id="@+id/edt_add_bullet_list"
         android:background="@android:color/transparent"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
         android:layout_height="wrap_content"/>
 
 
