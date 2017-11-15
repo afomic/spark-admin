@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.afomic.sparkadmin.MainActivity">
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imv_poster_icon"
+                android:layout_width="48dp"
+                android:src="@drawable/image"
+                android:layout_height="48dp"/>
+            <TextView
+                android:padding="8dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:text="President"
+                android:id="@+id/tv_poster_name"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:src="@drawable/ic_add_circle"
+                android:layout_width="32dp"
+                android:layout_margin="4dp"
+                android:id="@+id/imv_add_post"
+                android:layout_height="32dp"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/rv_post_list"
+        android:layout_height="wrap_content"/>
+
+
+</LinearLayout>

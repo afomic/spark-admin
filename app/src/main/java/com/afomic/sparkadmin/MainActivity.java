@@ -1,165 +1,140 @@
 package com.afomic.sparkadmin;
 
-import android.*;
-import android.Manifest;
-import android.app.DownloadManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.os.Environment;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
+
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.SparseArray;
-import android.util.SparseLongArray;
+import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.afomic.sparkadmin.adapter.PostAdapter;
-import com.afomic.sparkadmin.fragment.NewPostDialog;
-import com.afomic.sparkadmin.model.BlogPost;
-import com.afomic.sparkadmin.util.Constant;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import com.afomic.sparkadmin.adapter.navAdapter;
+import com.afomic.sparkadmin.fragment.PostFragment;
 
-import de.hdodenhof.circleimageview.CircleImageView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements PostAdapter.BlogPostListener {
-    RecyclerView postRecyclerView;
-    TextView posterTextView;
-    ImageView addPostImageView;
-    CircleImageView posterIcon;
-    ArrayList<BlogPost> mPostList;
-    PostAdapter mAdapter;
-    private static Map<Long,String> downloadRef=new HashMap<>();
+public class MainActivity extends AppCompatActivity {
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @BindView(R.id.home_drawer)
+    DrawerLayout homeDrawerLayout;
+
+    @BindView(R.id.nav_list)
+    ListView navBar;
+
+    FragmentManager fm;
+    navAdapter adapter;
+
+    int currentPosition=0;
+    int previousPosition=0;
+    boolean firstRun=true;
+
+    LinearLayout navItemLayout;
+
+    int[] navIcon={R.drawable.feedback,};
+
+    int[] selectedNavIcom={R.drawable.home_click};
+
+
+    public final String BUNDLE_POSITION="position";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        requestPermission();
-        postRecyclerView=(RecyclerView) findViewById(R.id.rv_post_list);
-        posterIcon=(CircleImageView) findViewById(R.id.imv_poster_icon);
-        posterTextView=(TextView) findViewById(R.id.tv_poster_name);
-        addPostImageView=(ImageView) findViewById(R.id.imv_add_post);
+        ButterKnife.bind(this);
 
-        mPostList=new ArrayList<>();
+        setSupportActionBar(mToolbar);
+
+        ActionBar actionBar=getSupportActionBar();
+        if(actionBar!=null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeAsUpIndicator(R.drawable.ic_hamburger);
+        }
+        Typeface roboto = Typeface.createFromAsset(getAssets(),"font/Lato-Regular.ttf");
+        setContentView(R.layout.activity_main);
+
+        if(savedInstanceState!=null){
+            currentPosition=savedInstanceState.getInt(BUNDLE_POSITION);
+        }
+        fm=getSupportFragmentManager();
+        Fragment fragment=fm.findFragmentById(R.id.main_container);
+        if(fragment==null){
+            PostFragment frag=PostFragment.newInstance();
+            fm.beginTransaction().add(R.id.main_container,frag).commit();
+        }
 
 
-        IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
-        registerReceiver(new DownloadBroadcastReciever(), filter);
+        //initialize the drawer layout
+        adapter=new navAdapter(this);
+        navBar.setAdapter(adapter);
 
-
-        mAdapter=new PostAdapter(this,mPostList);
-        RecyclerView.LayoutManager mLayoutManager=new LinearLayoutManager(this);
-        postRecyclerView.setLayoutManager(mLayoutManager);
-        postRecyclerView.setAdapter(mAdapter);
-
-        addPostImageView.setOnClickListener(new View.OnClickListener() {
+        navBar.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
-                NewPostDialog.newInstance().show(getSupportFragmentManager(),null);
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                View v;
+                ImageView icon;
+                TextView navText;
+                int firstCompletelyVisiblePos = navBar.getFirstVisiblePosition();
+                if(firstRun){
+                    navItemLayout=(LinearLayout)navBar.getChildAt(firstCompletelyVisiblePos);
+                    firstRun=false;
+                }
+
+                if (navItemLayout != null) {
+                    v =navItemLayout.getChildAt(0);
+                    icon = (ImageView) navItemLayout.getChildAt(1);
+                    navText = (TextView) navItemLayout.getChildAt(2);
+                    v.setBackgroundColor(Color.WHITE);
+                    icon.setImageResource(navIcon[previousPosition]);
+                    navText.setTextColor(Color.GRAY);
+                }
+                previousPosition = position;
+                navItemLayout = (LinearLayout) view;
+                v = navItemLayout.getChildAt(0);
+                icon = (ImageView) navItemLayout.getChildAt(1);
+                navText = (TextView) navItemLayout.getChildAt(2);
+                v.setBackgroundColor(Color.argb(255,3, 169,244));
+                icon.setImageResource(selectedNavIcom[position]);
+                navText.setTextColor(Color.argb(255, 3,169, 244));
+                supportInvalidateOptionsMenu();
+                currentPosition=position;
+                switch (position) {
+                    case 0:
+                        PostFragment postfragment = PostFragment.newInstance();
+                        displayFragment(postfragment);
+                        break;
+                }
             }
         });
+        TextView team= findViewById(R.id.team);
+        team.setTypeface(roboto);
 
-        DatabaseReference mDatabaseReference= FirebaseDatabase.getInstance().getReference().child("blog");
-        mDatabaseReference.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                BlogPost mPost=dataSnapshot.getValue(BlogPost.class);
-                mPostList.add(0,mPost);
-                mAdapter.notifyItemInserted(0);
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
     }
 
     @Override
-    public void OnFileBlogPostClick(BlogPost blogPost) {
-        File direct = new File(Environment.getExternalStorageDirectory()
-                + "/Spark/doc");
-
-        if (!direct.exists()) {
-            direct.mkdirs();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId()==android.R.id.home){
+            homeDrawerLayout.openDrawer(Gravity.LEFT);
         }
-        Uri file_uri = Uri.parse(blogPost.getFileUrl());
-        DownloadManager downloadManager=(DownloadManager) getSystemService(Context.DOWNLOAD_SERVICE);
-        DownloadManager.Request request = new DownloadManager.Request(file_uri);
-        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
-        request.setAllowedOverRoaming(false);
-        request.setTitle("Downloading " + blogPost.getTitle());
-        request.setVisibleInDownloadsUi(true);
-        request.setDestinationInExternalPublicDir("Spark/doc", blogPost.getTitle());
-
-        long refid = downloadManager.enqueue(request);
-        downloadRef.put(refid,blogPost.getId());
+        return super.onOptionsItemSelected(item);
     }
+    public void displayFragment(Fragment frag){
+        homeDrawerLayout.closeDrawers();
+        fm.beginTransaction().replace(R.id.main_container,frag).commit();
 
-    @Override
-    public void onBlogBlogPostClick(BlogPost BlogPost) {
-        Intent intent=new Intent(MainActivity.this,BlogDetailActivity.class);
-        intent.putExtra(Constant.EXTRA_BLOG_POST,BlogPost);
-        startActivity(intent);
-
-    }
-
-    public void requestPermission(){
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) !=
-                PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[] {
-                            android.Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    },100);
-        }
-
-    }
-    public String getFileName(BlogPost post){
-        String[] extension={".docx",".pdf",".pptx"};
-        return  post.getTitle()+extension[post.getFileType()];
-    }
-    public static class DownloadBroadcastReciever extends BroadcastReceiver{
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            long referenceId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
-            String id=downloadRef.get(referenceId);
-            if(id!=null){
-                Toast.makeText(context,"File downloaded",Toast.LENGTH_SHORT).show();
-
-            }
-        }
     }
 }

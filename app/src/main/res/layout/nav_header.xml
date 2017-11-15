@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_height="200dp">
+    <ImageView
+        android:scaleType="centerCrop"
+        android:src="@drawable/header_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:id="@+id/icon_image"
+        android:layout_margin="4dp"
+        android:src="@drawable/splash_icon"
+       android:layout_centerInParent="true"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true" />
+    <TextView
+        android:text="\u00a9 TEAM ACHIEVER"
+        android:textSize="12sp"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:id="@+id/team"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/backgroundColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

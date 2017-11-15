@@ -53,11 +53,18 @@ public class CreateBlogActivity extends AppCompatActivity implements
     private ActionListener mActionListener=new ActionListener() {
         @Override
         public void onDelete(int position) {
-            if(position!=0){
+            BlogElement item=mBlogElements.get(position);
+            if(item.getType()==BlogElement.Type.NUMBER_LIST_TEXT
+                    ||item.getType()==BlogElement.Type.BULLET_LIST_TEXT){
+                mBlogElements.remove(position);
+                mBlogElements.add(new NormalSizeTextElement());
+                mAdapter.notifyItemChanged(position);
+            }else {
                 mBlogElements.remove(position);
                 mAdapter.notifyItemRemoved(position);
                 numberListPosition-=1;
             }
+
 
         }
 
@@ -162,12 +169,6 @@ public class CreateBlogActivity extends AppCompatActivity implements
         mAdapter.notifyItemRemoved(position);
 
     }
-    //    @Override
-//    protected void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//        outState.putParcelableArrayList(BUNDLE_BLOG_ELEMENTS,mBlogElements);
-//    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -226,6 +227,7 @@ public class CreateBlogActivity extends AppCompatActivity implements
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 mProgressDialog.dismiss();
+                finish();
             }
         });
 

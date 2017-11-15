@@ -4,19 +4,18 @@
     android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:padding="4dp"
+    android:layout_marginLeft="16dp"
     android:orientation="horizontal"
     android:layout_height="wrap_content">
     <ImageView
         android:src="@drawable/ic_dot"
         android:layout_marginRight="8dp"
         android:layout_marginTop="6dp"
-        android:layout_marginLeft="8dp"
         android:layout_width="10dp"
         android:layout_height="10dp"/>
     <com.afomic.sparkadmin.util.CustomEditText
         android:layout_width="match_parent"
-        android:text="ddfdfd"
-        android:textSize="16sp"
+        android:textColor="@color/textColor"
         android:id="@+id/edt_add_bullet_list"
         android:background="@android:color/transparent"
         android:inputType="textCapSentences|textAutoCorrect|textMultiLine"

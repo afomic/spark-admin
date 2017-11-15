@@ -4,6 +4,7 @@
         android:layout_width="match_parent"
         android:id="@+id/edt_add_big_text"
         android:padding="8dp"
+    android:textColor="@color/colorBlack"
         android:textSize="32sp"
         android:background="@android:color/transparent"
         android:inputType="textCapSentences|textAutoCorrect|textMultiLine"
