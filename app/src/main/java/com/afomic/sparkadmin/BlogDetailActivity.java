@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -28,6 +29,8 @@ import butterknife.ButterKnife;
 
 public class BlogDetailActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<ArrayList<BlogElement>> {
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
     @BindView(R.id.rv_blog_detail)
     RecyclerView blogView;
     @BindView(R.id.progress_bar)
@@ -48,6 +51,12 @@ public class BlogDetailActivity extends AppCompatActivity
         ButterKnife.bind(this);
 
         mBlogPost = getIntent().getParcelableExtra(Constant.EXTRA_BLOG_POST);
+        setSupportActionBar(mToolbar);
+        ActionBar actionBar=getSupportActionBar();
+        if(actionBar!=null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(mBlogPost.getTitle());
+        }
 
         //parse the html in the background
         mLoadManager = getSupportLoaderManager();
@@ -101,4 +110,11 @@ public class BlogDetailActivity extends AppCompatActivity
 
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId()==android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

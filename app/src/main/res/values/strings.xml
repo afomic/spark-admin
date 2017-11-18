@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">SparkAdmin</string>
     <string name="select_file">Select File</string>
+    <string name="add_profile">add profile</string>
+    <string name="constitution_error_message">No Constituion Has been Uploaded</string>
+    <string name="add_constitution_csv">Upload Constitution CSV</string>
     <string-array name="file_type">
         <item>Select File type</item>
         <item>Doc file</item>

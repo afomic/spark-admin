@@ -19,6 +19,9 @@ import com.afomic.sparkadmin.R;
 
 public class ProfileFragment extends Fragment {
     String[] titles={"Executive","Parliament","Lecturer"};
+    public static ProfileFragment newInstance(){
+        return new ProfileFragment();
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,13 +33,6 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v=inflater.inflate(R.layout.profile_layout_fragment,container,false);
-        AppCompatActivity activity=(AppCompatActivity) getActivity();
-        Toolbar mToolbar= v.findViewById(R.id.profile_toolbar);
-        activity.setSupportActionBar(mToolbar);
-        activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        activity.getSupportActionBar().setTitle("Profile");
-
-
         TabLayout tabs=v.findViewById(R.id.profile_tab);
 
         ViewPager pager =v.findViewById(R.id.profile_pager);
@@ -63,12 +59,14 @@ public class ProfileFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_profile,menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()==android.R.id.home){
+        if(item.getItemId()==R.id.menu_add_profile){
+            NewProfileDialog.newInstance().show(getFragmentManager(),"");
         }
         return super.onOptionsItemSelected(item);
     }

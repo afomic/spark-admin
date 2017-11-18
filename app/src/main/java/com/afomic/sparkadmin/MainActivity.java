@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,19 +22,19 @@ import android.widget.TextView;
 
 
 import com.afomic.sparkadmin.adapter.navAdapter;
+import com.afomic.sparkadmin.fragment.ConstitutionFragment;
+import com.afomic.sparkadmin.fragment.CourseFragment;
 import com.afomic.sparkadmin.fragment.PostFragment;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import com.afomic.sparkadmin.fragment.PostMangerFragment;
+import com.afomic.sparkadmin.fragment.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity {
-    @BindView(R.id.toolbar)
+
+
     Toolbar mToolbar;
 
-    @BindView(R.id.home_drawer)
     DrawerLayout homeDrawerLayout;
 
-    @BindView(R.id.nav_list)
     ListView navBar;
 
     FragmentManager fm;
@@ -45,17 +46,17 @@ public class MainActivity extends AppCompatActivity {
 
     LinearLayout navItemLayout;
 
-    int[] navIcon={R.drawable.feedback,};
+    int[] navIcon={R.drawable.feedback, R.drawable.feedback,R.drawable.feedback,R.drawable.feedback,R.drawable.feedback};
 
-    int[] selectedNavIcom={R.drawable.home_click};
-
+    int[] selectedNavIcon={R.drawable.feedback, R.drawable.feedback,R.drawable.feedback,R.drawable.feedback,R.drawable.feedback};
 
     public final String BUNDLE_POSITION="position";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+
+        initializeView();
 
         setSupportActionBar(mToolbar);
 
@@ -63,9 +64,9 @@ public class MainActivity extends AppCompatActivity {
         if(actionBar!=null){
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_hamburger);
+            actionBar.setTitle("Home");
         }
         Typeface roboto = Typeface.createFromAsset(getAssets(),"font/Lato-Regular.ttf");
-        setContentView(R.layout.activity_main);
 
         if(savedInstanceState!=null){
             currentPosition=savedInstanceState.getInt(BUNDLE_POSITION);
@@ -78,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        //initialize the drawer layout
         adapter=new navAdapter(this);
         navBar.setAdapter(adapter);
 
@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                 icon = (ImageView) navItemLayout.getChildAt(1);
                 navText = (TextView) navItemLayout.getChildAt(2);
                 v.setBackgroundColor(Color.argb(255,3, 169,244));
-                icon.setImageResource(selectedNavIcom[position]);
+                icon.setImageResource(selectedNavIcon[position]);
                 navText.setTextColor(Color.argb(255, 3,169, 244));
                 supportInvalidateOptionsMenu();
                 currentPosition=position;
@@ -117,12 +117,38 @@ public class MainActivity extends AppCompatActivity {
                         PostFragment postfragment = PostFragment.newInstance();
                         displayFragment(postfragment);
                         break;
+                    case 1:
+                        PostMangerFragment postMangerFragment=PostMangerFragment.newInstance();
+                        displayFragment(postMangerFragment);
+                        break;
+                    case 2:
+                        ProfileFragment profileFragment=ProfileFragment.newInstance();
+                        displayFragment(profileFragment);
+                        break;
+                    case 3:
+                        ConstitutionFragment constitutionFragment=ConstitutionFragment.newInstance();
+                        displayFragment(constitutionFragment);
+                        break;
+                    case 4:
+                        CourseFragment courseFragment=CourseFragment.newInstance();
+                        displayFragment(courseFragment);
+                        break;
+
                 }
             }
         });
         TextView team= findViewById(R.id.team);
         team.setTypeface(roboto);
+    }
+    public void initializeView(){
+        mToolbar=findViewById(R.id.toolbar);
+        homeDrawerLayout=findViewById(R.id.home_drawer);
+        navBar=findViewById(R.id.nav_list);
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override

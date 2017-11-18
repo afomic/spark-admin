@@ -83,7 +83,7 @@ public class PostFragment extends Fragment implements PostAdapter.BlogPostListen
         getActivity().registerReceiver(new DownloadBroadcastReciever(), filter);
 
 
-        mAdapter=new PostAdapter(getActivity(),mPostList);
+        mAdapter=new PostAdapter(getActivity(),mPostList,this);
         RecyclerView.LayoutManager mLayoutManager=new LinearLayoutManager(getActivity());
         postRecyclerView.setLayoutManager(mLayoutManager);
         postRecyclerView.setAdapter(mAdapter);

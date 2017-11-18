@@ -7,14 +7,7 @@
     android:layout_height="match_parent">
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:elevation="4dp"
         android:layout_height="wrap_content">
-        <android.support.v7.widget.Toolbar
-            android:layout_width="match_parent"
-            android:id="@+id/profile_toolbar"
-            android:title="Profile"
-            app:layout_scrollFlags="scroll|enterAlways"
-            android:layout_height="?attr/actionBarSize"/>
         <android.support.design.widget.TabLayout
             android:id="@+id/profile_tab"
             app:tabIndicatorColor="@color/colorWhite"

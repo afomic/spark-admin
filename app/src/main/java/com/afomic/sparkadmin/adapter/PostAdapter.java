@@ -42,9 +42,9 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         void onBlogBlogPostClick(BlogPost blogPost);
     }
     private BlogPostListener mListener;
-    public PostAdapter(Context context, ArrayList<BlogPost> BlogPosts){
+    public PostAdapter(Context context, ArrayList<BlogPost> BlogPosts,BlogPostListener listener){
         mBlogPosts=BlogPosts;
-        mListener=(BlogPostListener) context;
+        mListener=listener;
         mContext=context;
         mSpringParser=new SpringParser();
         mediumFont=Typeface.createFromAsset(mContext.getAssets(), "font/medium.ttf");

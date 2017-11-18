@@ -1,10 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.afomic.sparkadmin.CreateProfileActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:background="@color/colorWhite"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"/>
+    </android.support.design.widget.AppBarLayout>
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
 
-</android.support.constraint.ConstraintLayout>
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:layout_margin="16dp"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="120dp"
+                    android:src="@drawable/default_logo"
+                    android:id="@+id/imv_business_logo"
+                    android:layout_height="120dp"/>
+                <android.support.design.widget.FloatingActionButton
+                    android:src="@drawable/ic_add"
+                    android:background="@color/colorWhite"
+                    app:backgroundTint="@color/colorWhite"
+                    app:fabSize="mini"
+                    android:id="@+id/fab_image"
+                    android:layout_marginLeft="78dp"
+                    android:layout_alignBottom="@id/imv_business_logo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </RelativeLayout>
+
+            <EditText
+                android:background="@drawable/edit_text_normal"
+                android:hint="Name"
+                android:id="@+id/edt_name"
+                android:inputType="textAutoComplete|textCapSentences"
+                android:padding="8dp"
+                android:layout_margin="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:background="@drawable/edit_text_normal"
+                android:hint="Email"
+                android:inputType="textAutoComplete|textCapSentences"
+                android:padding="8dp"
+                android:id="@+id/edt_business_sector"
+                android:layout_margin="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <EditText
+                android:background="@drawable/edit_text_normal"
+                android:hint="Phone Number"
+                android:inputType="phone"
+                android:padding="8dp"
+                android:id="@+id/edt_business_phone"
+                android:layout_margin="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:background="@drawable/edit_text_normal"
+                    android:hint="City"
+                    android:padding="8dp"
+                    android:id="@+id/edt_business_city"
+                    android:layout_margin="8dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:inputType="textAutoComplete|textCapSentences"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:background="@drawable/edit_text_normal"
+                    android:hint="State"
+                    android:padding="8dp"
+                    android:id="@+id/edt_business_state"
+                    android:layout_margin="8dp"
+                    android:layout_width="0dp"
+                    android:inputType="textAutoComplete|textCapSentences"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <EditText
+                android:background="@drawable/edit_text_normal"
+                android:id="@+id/business_year"
+                android:gravity="top|left"
+                android:hint="Year Established"
+                android:layout_margin="8dp"
+                android:padding="8dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+
+
+</android.support.design.widget.CoordinatorLayout>

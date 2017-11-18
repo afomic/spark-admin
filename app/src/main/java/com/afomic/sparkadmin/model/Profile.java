@@ -16,7 +16,6 @@ public class Profile implements Parcelable{
     private String telephoneNumber;
     private String email;
     private String level;
-    private String department;
     private String post;
     private int type;
     private String pictureUrl;
@@ -35,7 +34,6 @@ public class Profile implements Parcelable{
         telephoneNumber = in.readString();
         email = in.readString();
         level = in.readString();
-        department = in.readString();
         post = in.readString();
         type = in.readInt();
         pictureUrl = in.readString();
@@ -68,7 +66,6 @@ public class Profile implements Parcelable{
         dest.writeString(telephoneNumber);
         dest.writeString(email);
         dest.writeString(level);
-        dest.writeString(department);
         dest.writeString(post);
         dest.writeInt(type);
         dest.writeString(pictureUrl);
@@ -136,14 +133,6 @@ public class Profile implements Parcelable{
 
     public void setLevel(String level) {
         this.level = level;
-    }
-
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
     }
 
     public String getPost() {

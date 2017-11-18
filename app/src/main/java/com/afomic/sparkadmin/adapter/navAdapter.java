@@ -15,17 +15,18 @@ import com.afomic.sparkadmin.R;
 
 /**
  * Created by afomic on 30-Nov-16.
+ *
  */
 public class navAdapter extends BaseAdapter {
-    Context context;
-    String[] navigation={"Post","Post Manager","Profile","Constitution","Course",};
-    int[] imageId={R.drawable.feedback, R.drawable.feedback,R.drawable.feedback,R.drawable.home_click};
+    private Context context;
+    private String[] navigation={"Post","Post Manager","Profile","Constitution","Course",};
+    private int[] imageId={R.drawable.feedback, R.drawable.feedback,R.drawable.feedback,R.drawable.feedback,R.drawable.feedback};
     public navAdapter(Context c){
         context=c;
     }
     @Override
     public int getCount() {
-        return 9;
+        return 5;
     }
 
     @Override
@@ -41,13 +42,13 @@ public class navAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View v= LayoutInflater.from(context).inflate(R.layout.nav_item,parent,false);
-        TextView navText=(TextView) v.findViewById(R.id.nav_title);
+        TextView navText=v.findViewById(R.id.nav_title);
         Typeface typeface = Typeface.createFromAsset(context.getAssets(),"font/Lato-Regular.ttf");
-        ImageView navIcon=(ImageView) v.findViewById(R.id.nav_icon);
+        ImageView navIcon= v.findViewById(R.id.nav_icon);
         if(position==0){
             View indication =v.findViewById(R.id.nav_indicator);
             indication.setBackgroundColor(Color.argb(255,3, 169,244));
-            navIcon.setImageResource(R.drawable.home_click);
+            navIcon.setImageResource(R.drawable.feedback);
             navText.setText(getItem(position));
             navText.setTextColor(Color.argb(255,3, 169,244));
             return v;

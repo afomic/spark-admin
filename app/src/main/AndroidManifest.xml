@@ -38,6 +38,11 @@
         </activity>
         <activity android:name=".CreateProfileActivity">
         </activity>
+
+        <service
+            android:name=".CsvParserIntentService"
+            android:exported="false">
+        </service>
     </application>
 
 </manifest>

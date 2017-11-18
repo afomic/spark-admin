@@ -5,10 +5,12 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -44,6 +46,9 @@ public class CreateBlogActivity extends AppCompatActivity implements
         CreatePostAdapter.CreatePostCallback,UploadBlogDialog.UploadDialogListener{
     @BindView(R.id.rv_create_blog)
     RecyclerView createBlogList;
+
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
 
     private CreatePostAdapter mAdapter;
     private ArrayList<BlogElement> mBlogElements;
@@ -97,7 +102,15 @@ public class CreateBlogActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_blog);
+
         ButterKnife.bind( this);
+
+        setSupportActionBar(mToolbar);
+        ActionBar actionBar=getSupportActionBar();
+        if(actionBar!=null){
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle("Create Blog");
+        }
 
         mBlogElements=new ArrayList<>();
         mBlogElements.add(new BigSizeTextElement());
@@ -196,11 +209,15 @@ public class CreateBlogActivity extends AppCompatActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()==R.id.menu_submit_post){
-            if(isValidEntry()){
-                hideKeyboard(this);
-                showTitleDialog();
-            }
+        switch (item.getItemId()){
+            case R.id.menu_submit_post:
+                if(isValidEntry()){
+                    hideKeyboard(this);
+                    showTitleDialog();
+                }
+                break;
+            case android.R.id.home:
+                finish();
 
         }
         return super.onOptionsItemSelected(item);
@@ -308,4 +325,5 @@ public class CreateBlogActivity extends AppCompatActivity implements
     public void scrollToBottom(){
         createBlogList.scrollToPosition(mBlogElements.size()-1);
     }
+
 }
