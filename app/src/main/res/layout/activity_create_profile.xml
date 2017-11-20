@@ -21,7 +21,6 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-
             android:layout_height="match_parent">
             <RelativeLayout
                 android:layout_margin="16dp"
@@ -31,16 +30,16 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="120dp"
                     android:src="@drawable/default_logo"
-                    android:id="@+id/imv_business_logo"
+                    android:id="@+id/imv_profile_image"
                     android:layout_height="120dp"/>
                 <android.support.design.widget.FloatingActionButton
-                    android:src="@drawable/ic_add"
+                    android:src="@drawable/ic_add_black"
                     android:background="@color/colorWhite"
                     app:backgroundTint="@color/colorWhite"
                     app:fabSize="mini"
                     android:id="@+id/fab_image"
                     android:layout_marginLeft="78dp"
-                    android:layout_alignBottom="@id/imv_business_logo"
+                    android:layout_alignBottom="@id/imv_profile_image"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </RelativeLayout>
@@ -57,9 +56,9 @@
             <EditText
                 android:background="@drawable/edit_text_normal"
                 android:hint="Email"
-                android:inputType="textAutoComplete|textCapSentences"
+                android:inputType="textEmailAddress"
                 android:padding="8dp"
-                android:id="@+id/edt_business_sector"
+                android:id="@+id/edt_email"
                 android:layout_margin="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -68,19 +67,55 @@
                 android:hint="Phone Number"
                 android:inputType="phone"
                 android:padding="8dp"
-                android:id="@+id/edt_business_phone"
+                android:id="@+id/edt_phone_number"
                 android:layout_margin="8dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
             <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/lecturer_view"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <EditText
+                    android:background="@drawable/edit_text_normal"
+                    android:hint="Degree e.g M.sc (ife)"
+                    android:inputType="phone"
+                    android:padding="8dp"
+                    android:id="@+id/edt_lecturer_degree"
+                    android:layout_margin="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:background="@drawable/edit_text_normal"
+                    android:hint="Area of specialization"
+                    android:inputType="phone"
+                    android:padding="8dp"
+                    android:id="@+id/edt_lecturer_specialization_area"
+                    android:layout_margin="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <EditText
+                    android:background="@drawable/edit_text_normal"
+                    android:hint="Room Number"
+                    android:inputType="phone"
+                    android:padding="8dp"
+                    android:id="@+id/edt_lecturer_room_number"
+                    android:layout_margin="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/exco_view"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <EditText
                     android:background="@drawable/edit_text_normal"
-                    android:hint="City"
+                    android:hint="level e.g 400"
                     android:padding="8dp"
-                    android:id="@+id/edt_business_city"
+                    android:id="@+id/edt_executive_level"
                     android:layout_margin="8dp"
                     android:layout_width="0dp"
                     android:layout_weight="1"
@@ -88,24 +123,25 @@
                     android:layout_height="wrap_content" />
                 <EditText
                     android:background="@drawable/edit_text_normal"
-                    android:hint="State"
+                    android:hint="Position"
                     android:padding="8dp"
-                    android:id="@+id/edt_business_state"
+                    android:id="@+id/edt_executive_position"
                     android:layout_margin="8dp"
                     android:layout_width="0dp"
                     android:inputType="textAutoComplete|textCapSentences"
                     android:layout_weight="1"
                     android:layout_height="wrap_content" />
+
             </LinearLayout>
-            <EditText
-                android:background="@drawable/edit_text_normal"
-                android:id="@+id/business_year"
-                android:gravity="top|left"
-                android:hint="Year Established"
+            <Button
+                android:text="Create Profile"
+                android:layout_gravity="center"
                 android:layout_margin="8dp"
-                android:padding="8dp"
-                android:layout_width="match_parent"
+                android:id="@+id/btn_create_profile"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+
+
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 

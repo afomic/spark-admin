@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
@@ -71,6 +72,7 @@ public class PostFragment extends Fragment implements PostAdapter.BlogPostListen
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPostList=new ArrayList<>();
+        requestPermission();
     }
 
     @Nullable
@@ -136,24 +138,27 @@ public class PostFragment extends Fragment implements PostAdapter.BlogPostListen
     }
     @Override
     public void OnFileBlogPostClick(BlogPost blogPost) {
-        requestPermission();
-        File direct = new File(Environment.getExternalStorageDirectory()
-                + "/Spark/doc");
+        if(downloadRef.containsValue(blogPost.getId())){// file is already been downloaded
+            Toast.makeText(getActivity(),"File is Already been downloaded",Toast.LENGTH_SHORT).show();
+        }else {
+            File direct = new File(Environment.getExternalStorageDirectory()
+                    + "/Spark/doc");
+            if (!direct.exists()) {
+                direct.mkdirs();
+            }
+            Uri file_uri = Uri.parse(blogPost.getFileUrl());
+            DownloadManager downloadManager=(DownloadManager) getContext().getSystemService(Context.DOWNLOAD_SERVICE);
+            DownloadManager.Request request = new DownloadManager.Request(file_uri);
+            request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
+            request.setAllowedOverRoaming(false);
+            request.setTitle("Downloading " + blogPost.getTitle());
+            request.setVisibleInDownloadsUi(true);
+            request.setDestinationInExternalPublicDir("Spark/doc", blogPost.getTitle());
 
-        if (!direct.exists()) {
-            direct.mkdirs();
+            long refid = downloadManager.enqueue(request);
+            downloadRef.put(refid,blogPost.getId());
         }
-        Uri file_uri = Uri.parse(blogPost.getFileUrl());
-        DownloadManager downloadManager=(DownloadManager) getContext().getSystemService(Context.DOWNLOAD_SERVICE);
-        DownloadManager.Request request = new DownloadManager.Request(file_uri);
-        request.setAllowedNetworkTypes(DownloadManager.Request.NETWORK_WIFI | DownloadManager.Request.NETWORK_MOBILE);
-        request.setAllowedOverRoaming(false);
-        request.setTitle("Downloading " + blogPost.getTitle());
-        request.setVisibleInDownloadsUi(true);
-        request.setDestinationInExternalPublicDir("Spark/doc", blogPost.getTitle());
 
-        long refid = downloadManager.enqueue(request);
-        downloadRef.put(refid,blogPost.getId());
     }
 
     @Override
@@ -165,13 +170,16 @@ public class PostFragment extends Fragment implements PostAdapter.BlogPostListen
     }
 
     public void requestPermission(){
-        if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.READ_EXTERNAL_STORAGE) !=
-                PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(),
-                    new String[] {
-                            android.Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    },100);
+        if(Build.VERSION.SDK_INT>Build.VERSION_CODES.LOLLIPOP){
+            if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                    PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[] {
+                                android.Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        },100);
+            }
         }
+
 
     }
     public static class DownloadBroadcastReciever extends BroadcastReceiver {

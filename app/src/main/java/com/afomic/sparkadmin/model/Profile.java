@@ -3,6 +3,8 @@ package com.afomic.sparkadmin.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.afomic.sparkadmin.util.ColorGenerator;
+
 
 /**
  * Created by afomic on 17-Oct-16.
@@ -20,10 +22,10 @@ public class Profile implements Parcelable{
     private int type;
     private String pictureUrl;
     private String id;
-
+    private int color;
 
     public Profile(){
-
+        color = ColorGenerator.MATERIAL.getRandomColor();
     }
 
     protected Profile(Parcel in) {
@@ -38,6 +40,14 @@ public class Profile implements Parcelable{
         type = in.readInt();
         pictureUrl = in.readString();
         id = in.readString();
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 
     public static final Creator<Profile> CREATOR = new Creator<Profile>() {
@@ -75,7 +85,7 @@ public class Profile implements Parcelable{
     public class Type{
         public static final int EXCO=0;
         public static final int LECTURER=1 ;
-        public static final int PARLIAMENTARIAN =1 ;
+        public static final int PARLIAMENTARIAN =2 ;
 
     }
 

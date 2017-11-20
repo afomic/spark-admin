@@ -14,22 +14,28 @@
         android:gravity="center"
         android:orientation="vertical"
         android:layout_height="wrap_content">
-
         <TextView
-            android:text="@string/constitution_error_message"
+            android:text="No Constitution has been Uploaded"
             android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
             android:id="@+id/tv_error_text"
-            android:layout_margin="4dp"
+            android:layout_margin="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <Button
             android:textColorHint="@color/colorWhite"
-            android:hint="@string/add_constitution_csv"
-            android:padding="4dp"
+            android:hint="Upload Constition Csv"
+            android:padding="8dp"
+            android:id="@+id/btn_upload_constitution"
             android:layout_margin="4dp"
             android:background="@color/colorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </LinearLayout>
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>

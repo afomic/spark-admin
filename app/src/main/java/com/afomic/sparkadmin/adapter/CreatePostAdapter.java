@@ -285,12 +285,9 @@ public class CreatePostAdapter extends RecyclerView.Adapter<GenericViewHolder>{
 
         }
     }
-    public void getFocus(EditText edt,int position){
-        if(position==(htmlList.size()-1)){
-            edt.requestFocus();
-            showKeyboard(edt);
-        }
-
+    private void getFocus(EditText edt,int position){
+        edt.requestFocus();
+        showKeyboard(edt);
     }
     private void uploadPost(ImageElement element, final int position){
         Uri imageUri=element.getImageUri();
@@ -322,7 +319,7 @@ public class CreatePostAdapter extends RecyclerView.Adapter<GenericViewHolder>{
         });
     }
 
-    public void cancelUpload(String lastSegmentpath){
+    private void cancelUpload(String lastSegmentpath){
         UploadTask task=uploadTaskArray.get(lastSegmentpath);
         if(task.isSuccessful()){
             task.getResult().getStorage().delete();

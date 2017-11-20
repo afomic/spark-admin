@@ -15,8 +15,9 @@
             android:layout_height="wrap_content">
             <TextView
                 android:text="Create File Post"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:padding="8dp"
+                android:gravity="center_horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <EditText

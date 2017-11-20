@@ -26,7 +26,6 @@ public class CsvParserIntentService extends IntentService {
     public static final String ACTION_GET_COURSE = "com.afomic.sparkadmin.action.GET_COURSE";
     public static final String ACTION_GET_CONSTITUTION = "com.afomic.sparkadmin.action.GET_CONSTITUTION";
 
-    private static final String EXTRA_PATH = "com.afomic.sparkadmin.extra.PATH";
 
     public CsvParserIntentService() {
         super("CsvParserIntentService");
@@ -41,7 +40,7 @@ public class CsvParserIntentService extends IntentService {
     public static void startGetConstitution(Context context, String path) {
         Intent intent = new Intent(context, CsvParserIntentService.class);
         intent.setAction(ACTION_GET_CONSTITUTION);
-        intent.putExtra(EXTRA_PATH, path);
+        intent.putExtra(Constant.EXTRA_FILE_PATH, path);
         context.startService(intent);
     }
 
@@ -54,7 +53,7 @@ public class CsvParserIntentService extends IntentService {
     public static void startGetCourse(Context context, String path) {
         Intent intent = new Intent(context, CsvParserIntentService.class);
         intent.setAction(ACTION_GET_COURSE);
-        intent.putExtra(EXTRA_PATH, path);
+        intent.putExtra(Constant.EXTRA_FILE_PATH, path);
         context.startService(intent);
     }
 
@@ -63,10 +62,11 @@ public class CsvParserIntentService extends IntentService {
         if (intent != null) {
             final String action = intent.getAction();
             if (ACTION_GET_CONSTITUTION.equals(action)) {
-                final String path = intent.getStringExtra(EXTRA_PATH);
-                handleGetCourse(path);
+                final String path = intent.getStringExtra(Constant.EXTRA_FILE_PATH);
+                handleActionGetConstitution(path);
             } else if (ACTION_GET_COURSE.equals(action)) {
-                final String path = intent.getStringExtra(EXTRA_PATH);
+                final String path = intent.getStringExtra(Constant.EXTRA_FILE_PATH);
+                handleActionGetConstitution(path);
                 handleGetCourse(path);
             }
         }

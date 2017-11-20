@@ -39,8 +39,10 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.Holder> {
         Profile item= getItem(position);
         GlideApp.with(context)
                 .load(item.getPictureUrl())
+                .placeholder(R.drawable.image_placeholder)
                 .into(holder.personPicture);
         holder.personName.setText(item.getName());
+        holder.background.setBackgroundColor(item.getColor());
         if(item.getType()==Profile.Type.EXCO){
             holder.personDescription.setText(item.getPost());
         }else {
@@ -70,9 +72,11 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.Holder> {
         TextView personName, personDescription;
         ImageView personPicture;
         RelativeLayout container;
+        View background;
         public Holder(View itemView) {
             super(itemView);
             container= itemView.findViewById(R.id.person_container);
+            background=itemView.findViewById(R.id.background_view);
             personDescription=itemView.findViewById(R.id.tv_person_description);
             personName= itemView.findViewById(R.id.tv_person_name);
             personPicture= itemView.findViewById(R.id.iv_person_image);

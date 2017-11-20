@@ -1,5 +1,6 @@
 package com.afomic.sparkadmin;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -34,6 +35,8 @@ public class NewFilePostActivity extends AppCompatActivity {
     StorageReference mFirebaseStorage;
     DatabaseReference mFirebaseDatabase;
     public static final int FILE_REQUEST_CODE=101;
+
+    private ProgressDialog mProgressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,19 +70,27 @@ public class NewFilePostActivity extends AppCompatActivity {
             }
         });
 
+        mProgressDialog=new ProgressDialog(this);
+        mProgressDialog.setIndeterminate(true);
+        mProgressDialog.setMessage("Uploading file");
+        mProgressDialog.setCancelable(false);
+
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 fileTitle=fileTitleEditText.getText().toString();
                 if(isValid()){
-
+                    mProgressDialog.show();
                     StorageReference filePath= mFirebaseStorage.child("blog").child(fileUri.getLastPathSegment());
                     UploadTask fileTask=  filePath.putFile(fileUri);
                     fileTask.addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-
+                            mProgressDialog.dismiss();
+                            Toast.makeText(NewFilePostActivity.this,
+                                    "Fail Upload Error",
+                                    Toast.LENGTH_SHORT).show();
                         }
                     }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @SuppressWarnings("test")
@@ -95,6 +106,8 @@ public class NewFilePostActivity extends AppCompatActivity {
                             mPost.setFileUrl(fileUrl);
                             mPost.setType(BlogPost.Type.FILE);
                             uploadPost(mPost);
+                            mProgressDialog.dismiss();
+                            finish();
                         }
                     });
 

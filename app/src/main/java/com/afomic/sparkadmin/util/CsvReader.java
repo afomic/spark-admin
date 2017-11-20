@@ -41,15 +41,19 @@ public class CsvReader{
         }
         return csv;
     }
-    private Course getCourse(String[] data)throws NumberFormatException{
-       Course course=new Course();
-       course.setCourseName(data[0]);
-       course.setTitle(data[1]);
+    private Course getCourse(String[] data)throws NumberFormatException,InvalidPropertiesFormatException{
+        Course course=new Course();
+       try{
+           course.setCourseName(data[0]);
+           course.setTitle(data[1]);
+           course.setCourseUnit(Integer.parseInt(data[2]));
+           course.setCourseSemester(Integer.parseInt(data[3]));
+           course.setCourseLevel(Integer.parseInt(data[4]));
+           course.setPrerequisite(data[3]);
+       }catch (IndexOutOfBoundsException e){
+           throw new InvalidPropertiesFormatException("wrong format");
+       }
 
-       course.setCourseUnit(Integer.parseInt(data[2]));
-       course.setCourseSemester(Integer.parseInt(data[3]));
-       course.setCourseLevel(Integer.parseInt(data[4]));
-       course.setPrerequisite(data[3]);
        return course;
 
     }

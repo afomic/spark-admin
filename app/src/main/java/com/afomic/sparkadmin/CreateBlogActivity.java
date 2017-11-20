@@ -131,8 +131,7 @@ public class CreateBlogActivity extends AppCompatActivity implements
         resetNumberListPosition();
         BigSizeTextElement element=new BigSizeTextElement();
         mBlogElements.add(element);
-        mAdapter.notifyDataSetChanged();
-        scrollToBottom();
+        notifyDataInserted();
 
     }
     @OnClick(R.id.btn_bullet_list)
@@ -140,8 +139,7 @@ public class CreateBlogActivity extends AppCompatActivity implements
         resetNumberListPosition();
         BulletListTextElement bullet=new BulletListTextElement();
         mBlogElements.add(bullet);
-        mAdapter.notifyDataSetChanged();
-        scrollToBottom();
+        notifyDataInserted();
 
     }
     @OnClick(R.id.btn_number_list)
@@ -149,8 +147,7 @@ public class CreateBlogActivity extends AppCompatActivity implements
         numberListPosition+=1;
         NumberListElement listElement=new NumberListElement(numberListPosition);
         mBlogElements.add(listElement);
-        mAdapter.notifyDataSetChanged();
-        scrollToBottom();
+        notifyDataInserted();
 
     }
     @OnClick(R.id.btn_normal_text)
@@ -158,8 +155,7 @@ public class CreateBlogActivity extends AppCompatActivity implements
         resetNumberListPosition();
         NormalSizeTextElement element=new NormalSizeTextElement();
         mBlogElements.add(element);
-        mAdapter.notifyDataSetChanged();
-        scrollToBottom();
+         notifyDataInserted();
 
 
     }
@@ -192,8 +188,7 @@ public class CreateBlogActivity extends AppCompatActivity implements
                 ImageElement element=new ImageElement();
                 element.setImageUri(imageUri);
                 mBlogElements.add(element);
-                mAdapter.notifyDataSetChanged();
-                createBlogList.scrollToPosition(mBlogElements.size()-1);
+                notifyDataInserted();
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
             }
@@ -322,8 +317,14 @@ public class CreateBlogActivity extends AppCompatActivity implements
             numberListPosition=0;
         }
     }
-    public void scrollToBottom(){
-        createBlogList.scrollToPosition(mBlogElements.size()-1);
+    public void scrollToPosition(int position){
+        createBlogList.scrollToPosition(position);
+
+    }
+    public void notifyDataInserted(){
+        int lastPosition=mBlogElements.size()-1;
+        mAdapter.notifyItemInserted(lastPosition);
+        scrollToPosition(lastPosition);
     }
 
 }

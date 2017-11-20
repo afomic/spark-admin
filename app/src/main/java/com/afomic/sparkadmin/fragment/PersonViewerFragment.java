@@ -67,7 +67,7 @@ public class PersonViewerFragment extends Fragment {
 
         grid.setAdapter(adapter);
 
-        profileRef=FirebaseDatabase.getInstance().getReference("profiles/nacoss")
+        profileRef=FirebaseDatabase.getInstance().getReference("profile/nacoss")
         ;
         profileRef.orderByChild("type")
                 .equalTo(type)
