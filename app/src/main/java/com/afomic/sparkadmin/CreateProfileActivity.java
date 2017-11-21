@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,7 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.afomic.sparkadmin.model.Profile;
-import com.afomic.sparkadmin.util.Constant;
+import com.afomic.sparkadmin.data.Constant;
 import com.afomic.sparkadmin.util.GlideApp;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -81,17 +82,19 @@ public class CreateProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_profile);
 
+        ButterKnife.bind(this);
+
         setSupportActionBar(mToolbar);
         ActionBar actionBar=getSupportActionBar();
         if(actionBar!=null){
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle("Create Blog");
+            actionBar.setTitle("New Profile");
         }
 
         mProgressDialog=new ProgressDialog(this);
         mProgressDialog.setMessage("Creating profile..");
         mProgressDialog.setCancelable(false);
-        ButterKnife.bind(this);
+
         profileType=getIntent().getIntExtra(Constant.EXTRA_TYPE,0);
         if(profileType== Profile.Type.LECTURER){
             lecturerLayout.setVisibility(View.VISIBLE);
@@ -106,7 +109,6 @@ public class CreateProfileActivity extends AppCompatActivity {
         if(isValidForm()){
             mProgressDialog.show();
             if(imageUri!=null){
-
                 UploadTask logoUpload=mStorageReference
                         .child(imageUri.getLastPathSegment())
                         .putFile(imageUri);
@@ -121,8 +123,10 @@ public class CreateProfileActivity extends AppCompatActivity {
                             profile.setId(id);
                             mDatabaseReference.child(id).setValue(profile);
                             mProgressDialog.dismiss();
+                            finish();
                         }else {
                             mProgressDialog.dismiss();
+                            finish();
                             Toast.makeText(CreateProfileActivity.this,
                                     "Failed to upload",
                                     Toast.LENGTH_SHORT).show();
@@ -137,6 +141,7 @@ public class CreateProfileActivity extends AppCompatActivity {
                 profile.setId(id);
                 mDatabaseReference.child(id).setValue(profile);
                 mProgressDialog.dismiss();
+                finish();
             }
 
         }
@@ -214,5 +219,13 @@ public class CreateProfileActivity extends AppCompatActivity {
             }
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId()==android.R.id.home){
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

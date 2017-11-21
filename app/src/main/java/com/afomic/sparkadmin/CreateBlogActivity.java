@@ -28,7 +28,6 @@ import com.afomic.sparkadmin.model.ImageElement;
 import com.afomic.sparkadmin.model.NormalSizeTextElement;
 import com.afomic.sparkadmin.model.NumberListElement;
 import com.afomic.sparkadmin.util.ElementParser;
-import com.afomic.sparkadmin.util.GlideApp;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;

@@ -1,7 +1,6 @@
 package com.afomic.sparkadmin;
 
 import android.content.Context;
-import android.provider.SyncStateContract;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -13,13 +12,12 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 
 import com.afomic.sparkadmin.adapter.BlogDisplayAdapter;
 import com.afomic.sparkadmin.model.BlogElement;
 import com.afomic.sparkadmin.model.BlogPost;
-import com.afomic.sparkadmin.util.Constant;
+import com.afomic.sparkadmin.data.Constant;
 import com.afomic.sparkadmin.util.ElementParser;
 
 import java.util.ArrayList;

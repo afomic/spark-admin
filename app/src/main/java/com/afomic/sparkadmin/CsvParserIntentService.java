@@ -3,11 +3,10 @@ package com.afomic.sparkadmin;
 import android.app.IntentService;
 import android.content.Intent;
 import android.content.Context;
-import android.widget.Toast;
 
 import com.afomic.sparkadmin.model.Constitution;
 import com.afomic.sparkadmin.model.Course;
-import com.afomic.sparkadmin.util.Constant;
+import com.afomic.sparkadmin.data.Constant;
 import com.afomic.sparkadmin.util.CsvReader;
 
 import java.io.FileNotFoundException;

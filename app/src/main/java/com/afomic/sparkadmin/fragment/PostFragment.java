@@ -28,7 +28,7 @@ import com.afomic.sparkadmin.BlogDetailActivity;
 import com.afomic.sparkadmin.R;
 import com.afomic.sparkadmin.adapter.PostAdapter;
 import com.afomic.sparkadmin.model.BlogPost;
-import com.afomic.sparkadmin.util.Constant;
+import com.afomic.sparkadmin.data.Constant;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;

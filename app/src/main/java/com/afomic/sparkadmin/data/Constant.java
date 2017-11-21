@@ -1,4 +1,4 @@
-package com.afomic.sparkadmin.util;
+package com.afomic.sparkadmin.data;
 
 /**
  * Created by afomic on 11/7/17.
@@ -6,7 +6,8 @@ package com.afomic.sparkadmin.util;
 
 public class Constant {
     public static final String EXTRA_BLOG_POST="post";
-    public static final String EXTRA_PROFILE="profile";
+    public static final int STATUS_APPROVED=1;
+    public static final int STATUS_UNAPPROVED=0;
     public static final String EXTRA_TYPE="type";
     public static final String EXTRA_ERROR="error";
     public static final String EXTRA_FILE_PATH="path";

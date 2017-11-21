@@ -46,9 +46,13 @@ public class MainActivity extends AppCompatActivity {
 
     LinearLayout navItemLayout;
 
-    int[] navIcon={R.drawable.feedback, R.drawable.feedback,R.drawable.feedback,R.drawable.feedback,R.drawable.feedback};
+    int[] navIcon={R.drawable.feedback,
+            R.drawable.feedback,R.drawable.feedback,
+            R.drawable.feedback,R.drawable.feedback};
 
-    int[] selectedNavIcon={R.drawable.feedback, R.drawable.feedback,R.drawable.feedback,R.drawable.feedback,R.drawable.feedback};
+    int[] selectedNavIcon={R.drawable.feedback,
+            R.drawable.feedback,R.drawable.feedback,
+            R.drawable.feedback,R.drawable.feedback};
 
     public final String BUNDLE_POSITION="position";
     @Override

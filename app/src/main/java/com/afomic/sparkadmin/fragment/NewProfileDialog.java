@@ -12,7 +12,7 @@ import android.view.View;
 import com.afomic.sparkadmin.CreateProfileActivity;
 import com.afomic.sparkadmin.R;
 import com.afomic.sparkadmin.model.Profile;
-import com.afomic.sparkadmin.util.Constant;
+import com.afomic.sparkadmin.data.Constant;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -53,6 +53,7 @@ public class NewProfileDialog extends DialogFragment {
         Intent createProfileIntent=new Intent(getActivity(), CreateProfileActivity.class);
         createProfileIntent.putExtra(Constant.EXTRA_TYPE,profileType);
         startActivity(createProfileIntent);
+        dismiss();
 
     }
 }

@@ -10,11 +10,8 @@
         android:layout_height="wrap_content">
         <android.support.design.widget.TabLayout
             android:id="@+id/profile_tab"
-            app:tabIndicatorColor="@color/colorWhite"
-            app:tabSelectedTextColor="@color/colorWhite"
             app:tabIndicatorHeight="3dp"
             app:tabPaddingBottom="2dp"
-            app:tabTextColor="#FF9DD8FC"
             app:tabMaxWidth="0dp"
             app:tabGravity="fill"
             app:tabMode="fixed"
