@@ -27,8 +27,10 @@ import android.widget.Toast;
 import com.afomic.sparkadmin.BlogDetailActivity;
 import com.afomic.sparkadmin.R;
 import com.afomic.sparkadmin.adapter.PostAdapter;
+import com.afomic.sparkadmin.data.PreferenceManager;
 import com.afomic.sparkadmin.model.BlogPost;
 import com.afomic.sparkadmin.data.Constant;
+import com.afomic.sparkadmin.util.GlideApp;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -67,11 +69,13 @@ public class PostFragment extends Fragment implements PostAdapter.BlogPostListen
     public static PostFragment newInstance(){
         return new PostFragment();
     }
+    private PreferenceManager mPreferenceManager;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPostList=new ArrayList<>();
+        mPreferenceManager=new PreferenceManager(getActivity());
         requestPermission();
     }
 
@@ -84,6 +88,12 @@ public class PostFragment extends Fragment implements PostAdapter.BlogPostListen
         IntentFilter filter = new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE);
         getActivity().registerReceiver(new DownloadBroadcastReciever(), filter);
 
+        posterTextView.setText(mPreferenceManager.getUsername());
+
+        GlideApp.with(getActivity())
+                .load(mPreferenceManager.getIconUrl())
+                .placeholder(R.drawable.image_placeholder)
+                .into(posterIcon);
 
         mAdapter=new PostAdapter(getActivity(),mPostList,this);
         RecyclerView.LayoutManager mLayoutManager=new LinearLayoutManager(getActivity());

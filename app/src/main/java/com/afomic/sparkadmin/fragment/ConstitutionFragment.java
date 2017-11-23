@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.afomic.sparkadmin.CsvParserIntentService;
 import com.afomic.sparkadmin.R;
 import com.afomic.sparkadmin.adapter.ConstitutionAdapter;
+import com.afomic.sparkadmin.data.PreferenceManager;
 import com.afomic.sparkadmin.model.Constitution;
 
 import java.util.ArrayList;
@@ -61,6 +62,8 @@ public class ConstitutionFragment extends Fragment {
 
     private static final int REQUEST_CODE_GET_CSV=101;
 
+    PreferenceManager mPreferenceManager;
+
     public static ConstitutionFragment newInstance(){
         return new ConstitutionFragment();
     }
@@ -71,6 +74,7 @@ public class ConstitutionFragment extends Fragment {
         IntentFilter intentFilter=new IntentFilter(CsvParserIntentService.ACTION_GET_CONSTITUTION);
         mReceiver=new CourseBroadcastReceiver();
         getActivity().registerReceiver(mReceiver, intentFilter);
+        mPreferenceManager=new PreferenceManager(getActivity());
     }
 
     @Nullable
@@ -81,7 +85,9 @@ public class ConstitutionFragment extends Fragment {
 
         mConstitutions=new ArrayList<>();
 
-        constitutionRef= FirebaseDatabase.getInstance().getReference("constitution/sample");
+        String associationName=mPreferenceManager.getAssociationName();
+
+        constitutionRef= FirebaseDatabase.getInstance().getReference("constitution/"+associationName);
 
         constitutionListView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
@@ -166,6 +172,7 @@ public class ConstitutionFragment extends Fragment {
     @Override
     public void onDestroy() {
         getActivity().unregisterReceiver(mReceiver);
+        mPreferenceManager=null;
         super.onDestroy();
     }
     private void showProgressBar(){
@@ -180,5 +187,6 @@ public class ConstitutionFragment extends Fragment {
     private void hideErrorMessage(){
         emptyViewLayout.setVisibility(View.GONE);
     }
+
 
 }

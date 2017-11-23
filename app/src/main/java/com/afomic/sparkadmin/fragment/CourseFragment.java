@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.afomic.sparkadmin.CsvParserIntentService;
 import com.afomic.sparkadmin.R;
 import com.afomic.sparkadmin.adapter.CourseListAdapter;
+import com.afomic.sparkadmin.data.PreferenceManager;
 import com.afomic.sparkadmin.model.Course;
 
 import java.util.ArrayList;
@@ -61,6 +62,9 @@ public class CourseFragment extends Fragment {
 
     private static final int REQUEST_CODE_GET_CSV=101;
 
+    PreferenceManager mPreferenceManager;
+
+
     public static CourseFragment newInstance(){
         return new CourseFragment();
     }
@@ -71,6 +75,7 @@ public class CourseFragment extends Fragment {
         IntentFilter intentFilter=new IntentFilter(CsvParserIntentService.ACTION_GET_COURSE);
         mReceiver=new CourseBroadcastReceiver();
         getActivity().registerReceiver(mReceiver, intentFilter);
+        mPreferenceManager=new PreferenceManager(getActivity());
     }
 
     @Nullable
@@ -81,7 +86,9 @@ public class CourseFragment extends Fragment {
 
         mCourses=new ArrayList<>();
 
-        courseRef= FirebaseDatabase.getInstance().getReference("course/sample");
+        String associationName=mPreferenceManager.getAssociationName();
+
+        courseRef= FirebaseDatabase.getInstance().getReference("course/"+associationName);
 
         courseListView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
