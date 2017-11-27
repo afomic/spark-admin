@@ -14,7 +14,7 @@
             android:padding="4dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:paddingTop="4dp"
                 android:id="@+id/imv_post_icon"
                 android:src="@drawable/sample"
@@ -69,6 +69,7 @@
                 android:layout_height="wrap_content"/>
             <ImageView
                 android:padding="4dp"
+                android:background="?selectableItemBackground"
                 android:id="@+id/imv_download_icon"
                 android:layout_gravity="center"
                 android:src="@drawable/ic_file_download"

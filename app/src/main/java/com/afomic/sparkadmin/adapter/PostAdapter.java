@@ -119,6 +119,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             if(dataSnapshot.hasChild(userId)){
                                 mHolder.downloadIcon.setEnabled(false);
                                 mHolder.downloadIcon.setClickable(false);
+                                mHolder.downloadIcon.setImageResource(R.drawable.ic_downloaded);
 
                             }
 

@@ -84,8 +84,8 @@ public class Profile implements Parcelable{
 
     public class Type{
         public static final int EXCO=0;
-        public static final int LECTURER=1 ;
-        public static final int PARLIAMENTARIAN =2 ;
+        public static final int LECTURER=2 ;
+        public static final int PARLIAMENTARIAN =1 ;
 
     }
 

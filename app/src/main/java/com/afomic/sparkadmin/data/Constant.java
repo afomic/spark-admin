@@ -18,5 +18,4 @@ public class Constant {
     public static final String EXTRA_COURSE_LIST="course_list";
     public static final String EXTRA_SIGN_UP_TYPE="sign_up_type";
     public static final String EXTRA_CONSTITUTION_LIST="course_list";
-
 }

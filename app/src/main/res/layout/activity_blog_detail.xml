@@ -37,6 +37,7 @@
         app:backgroundTint="@color/colorWhite"
         android:layout_margin="8dp"
         app:fabSize="normal"
+        app:layout_behavior="com.afomic.sparkadmin.util.FloatingActionButtonLayoutBehaviour"
         android:src="@drawable/ic_favorite_border"
         android:layout_height="wrap_content"/>
 

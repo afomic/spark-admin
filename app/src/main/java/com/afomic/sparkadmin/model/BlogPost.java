@@ -129,6 +129,13 @@ public class BlogPost implements Parcelable {
         this.fileType = fileType;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public class Type{
         public static final int FILE=0;

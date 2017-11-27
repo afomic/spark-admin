@@ -148,9 +148,11 @@ public class PostFragment extends Fragment implements PostAdapter.BlogPostListen
     }
     @Override
     public void OnFileBlogPostClick(BlogPost blogPost) {
+        updateStats(blogPost.getId());
         if(downloadRef.containsValue(blogPost.getId())){// file is already been downloaded
             Toast.makeText(getActivity(),"File is Already been downloaded",Toast.LENGTH_SHORT).show();
         }else {
+
             File direct = new File(Environment.getExternalStorageDirectory()
                     + "/Spark/doc");
             if (!direct.exists()) {
@@ -190,6 +192,14 @@ public class PostFragment extends Fragment implements PostAdapter.BlogPostListen
             }
         }
 
+
+    }
+    public void updateStats(String postId){
+        FirebaseDatabase.getInstance()
+                .getReference("recommendation")
+                .child(postId)
+                .child(mPreferenceManager.getUserId())
+                .setValue(true);
 
     }
     public static class DownloadBroadcastReciever extends BroadcastReceiver {

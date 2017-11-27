@@ -18,6 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.afomic.sparkadmin.adapter.CreatePostAdapter;
+import com.afomic.sparkadmin.data.PreferenceManager;
 import com.afomic.sparkadmin.fragment.UploadBlogDialog;
 import com.afomic.sparkadmin.model.ActionListener;
 import com.afomic.sparkadmin.model.BigSizeTextElement;
@@ -41,6 +42,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.afomic.sparkadmin.data.Constant.STATUS_APPROVED;
+
 public class CreateBlogActivity extends AppCompatActivity implements
         CreatePostAdapter.CreatePostCallback,UploadBlogDialog.UploadDialogListener{
     @BindView(R.id.rv_create_blog)
@@ -53,6 +56,7 @@ public class CreateBlogActivity extends AppCompatActivity implements
     private ArrayList<BlogElement> mBlogElements;
 
     private ProgressDialog mProgressDialog;
+    PreferenceManager mPreferenceManager;
     private int numberListPosition=0;
     private ActionListener mActionListener=new ActionListener() {
         @Override
@@ -121,7 +125,8 @@ public class CreateBlogActivity extends AppCompatActivity implements
         mProgressDialog=new ProgressDialog(this);
         mProgressDialog.setMessage("Uploading post...");
         mProgressDialog.setIndeterminate(true);
-        mProgressDialog.setCancelable(false);
+
+        mPreferenceManager=new PreferenceManager(this);
 
 
     }
@@ -270,8 +275,10 @@ public class CreateBlogActivity extends AppCompatActivity implements
         }
         post.setBody(postBody);
         post.setTitle(title);
-        post.setPosterName("President");
+        post.setPosterName(mPreferenceManager.getUsername());
+        post.setPictureUrl(mPreferenceManager.getIconUrl());
         post.setType(BlogPost.Type.BLOG);
+        post.setStatus(STATUS_APPROVED);
         mProgressDialog.show();
         uploadPost(post);
     }
