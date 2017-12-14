@@ -70,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_hamburger);
             actionBar.setTitle("Home");
         }
+
+
         Typeface roboto = Typeface.createFromAsset(getAssets(),"font/Lato-Regular.ttf");
 
         if(savedInstanceState!=null){

@@ -192,6 +192,7 @@ public class CreateBlogActivity extends AppCompatActivity implements
                 ImageElement element=new ImageElement();
                 element.setImageUri(imageUri);
                 mBlogElements.add(element);
+                mBlogElements.add(new NormalSizeTextElement());
                 notifyDataInserted();
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
