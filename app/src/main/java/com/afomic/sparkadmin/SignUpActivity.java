@@ -179,7 +179,9 @@ public class SignUpActivity extends AppCompatActivity {
                             mPreferenceManager.setAssociationName(Util.getString(associationNameEditText));
                             setUpProfile();
                         }else {
+                            mProgressDialog.dismiss();
                             Util.makeToast(SignUpActivity.this,"Invalid email");
+
                         }
 
                     }

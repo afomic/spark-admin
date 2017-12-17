@@ -11,6 +11,7 @@ import java.util.Random;
 
 /**
  * Created by afomic on 11/22/17.
+ *
  */
 
 public class Util {

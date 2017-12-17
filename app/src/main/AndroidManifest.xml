@@ -18,15 +18,15 @@
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat"/>
         <activity android:name=".MainActivity">
+        </activity>
+        <activity android:name=".NewFilePostActivity">
+        </activity>
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-        </activity>
-        <activity android:name=".NewFilePostActivity">
-        </activity>
-        <activity android:name=".LoginActivity">
         </activity>
         <activity android:name=".SignUpActivity">
         </activity>
