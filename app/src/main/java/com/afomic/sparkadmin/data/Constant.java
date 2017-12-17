@@ -6,6 +6,7 @@ package com.afomic.sparkadmin.data;
 
 public class Constant {
     public static final String EXTRA_BLOG_POST="post";
+    public static final String EXTRA_BLOG_ELEMENTS="blog_elements";
     public static final int STATUS_APPROVED=1;
     public static final int STATUS_UNAPPROVED=0;
 

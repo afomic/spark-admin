@@ -18,7 +18,7 @@ public class BlogPost implements Parcelable {
     private String mPosterName;
     private String mPosterIconUrl;
     private int  fileType;
-    int status;
+    private int status;
 
     public BlogPost(){
         mTimeStamp=System.currentTimeMillis();

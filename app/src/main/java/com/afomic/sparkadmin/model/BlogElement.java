@@ -7,7 +7,7 @@ import android.os.Parcelable;
  *
  */
 
-public interface BlogElement{
+public interface BlogElement extends Parcelable{
     int getType();
 
     String toHtml();

@@ -1,6 +1,7 @@
 package com.afomic.sparkadmin;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -19,11 +21,16 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.ProgressBar;
 
 import com.afomic.sparkadmin.adapter.BlogDisplayAdapter;
+import com.afomic.sparkadmin.data.PreferenceManager;
 import com.afomic.sparkadmin.model.BlogElement;
 import com.afomic.sparkadmin.model.BlogPost;
 import com.afomic.sparkadmin.data.Constant;
 import com.afomic.sparkadmin.util.ElementParser;
 import com.afomic.sparkadmin.util.HidingScrollLinearListener;
+import com.afomic.sparkadmin.util.Util;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -41,14 +48,16 @@ public class BlogDetailActivity extends AppCompatActivity
     @BindView(R.id.fab_like)
     FloatingActionButton likeFab;
     LinearLayoutManager mLayoutManager;
-
     BlogPost mBlogPost;
+    ArrayList<BlogElement> mBlogElements;
 
     private static final String PARAM_BLOG_HTML = "html";
 
     private static final int BLOG_ELEMENT_LOADER_ID = 101;
 
-    LoaderManager mLoadManager;
+    private LoaderManager mLoadManager;
+    private PreferenceManager mPreferenceManager;
+    private DatabaseReference postRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +72,12 @@ public class BlogDetailActivity extends AppCompatActivity
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(mBlogPost.getTitle());
         }
+        mPreferenceManager=new PreferenceManager(this);
+        String postPath="posts/"+mPreferenceManager.getAssociationName();
+
+        postRef= FirebaseDatabase.getInstance().getReference(postPath)
+                .child(mBlogPost.getId());
+
 
         //parse the html in the background
         mLoadManager = getSupportLoaderManager();
@@ -126,6 +141,7 @@ public class BlogDetailActivity extends AppCompatActivity
     @Override
     public void onLoadFinished(Loader<ArrayList<BlogElement>> loader, ArrayList<BlogElement> data) {
         mProgressBar.setVisibility(View.GONE);
+        mBlogElements=data;
         BlogDisplayAdapter adapter = new BlogDisplayAdapter(BlogDetailActivity.this, data);
         blogView.setLayoutManager(new LinearLayoutManager(this));
         blogView.setAdapter(adapter);
@@ -138,9 +154,45 @@ public class BlogDetailActivity extends AppCompatActivity
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if(mPreferenceManager.isAdmin()){
+            getMenuInflater().inflate(R.menu.post_manager_menu,menu);
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId()==android.R.id.home){
-            finish();
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                break;
+            case R.id.menu_approve_post:
+                postRef.child("status")
+                        .setValue(Constant.STATUS_APPROVED)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Util.makeToast(BlogDetailActivity.this,"Approved");
+                            }
+                        });
+                break;
+            case R.id.menu_delete_post:
+                postRef.removeValue()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Util.makeToast(BlogDetailActivity.this,"Deleted");
+                                finish();
+                            }
+                        });
+                break;
+            case R.id.menu_edit_post:
+                Intent intent=new Intent(this,CreateBlogActivity.class);
+                intent.putExtra(Constant.EXTRA_BLOG_ELEMENTS,mBlogElements);
+                startActivity(intent);
+                break;
+
         }
         return super.onOptionsItemSelected(item);
     }

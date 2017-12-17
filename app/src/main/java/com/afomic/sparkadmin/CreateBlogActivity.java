@@ -18,6 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.afomic.sparkadmin.adapter.CreatePostAdapter;
+import com.afomic.sparkadmin.data.Constant;
 import com.afomic.sparkadmin.data.PreferenceManager;
 import com.afomic.sparkadmin.fragment.UploadBlogDialog;
 import com.afomic.sparkadmin.model.ActionListener;
@@ -116,7 +117,11 @@ public class CreateBlogActivity extends AppCompatActivity implements
         }
 
         mBlogElements=new ArrayList<>();
-        mBlogElements.add(new BigSizeTextElement());
+        if(getIntent().getParcelableArrayListExtra(Constant.EXTRA_BLOG_ELEMENTS)!=null){
+            mBlogElements=getIntent().getParcelableArrayListExtra(Constant.EXTRA_BLOG_ELEMENTS);
+        }else {
+            mBlogElements.add(new BigSizeTextElement());
+        }
         mAdapter=new CreatePostAdapter(this,mActionListener,mBlogElements);
         LinearLayoutManager layoutManager=new LinearLayoutManager(this);
         createBlogList.setLayoutManager(layoutManager);
@@ -237,8 +242,9 @@ public class CreateBlogActivity extends AppCompatActivity implements
         dialog.show(getSupportFragmentManager(),null);
     }
     public void uploadPost(BlogPost post){
+        String associationName=mPreferenceManager.getAssociationName();
         DatabaseReference blogRef=
-        FirebaseDatabase.getInstance().getReference("blog").push();
+        FirebaseDatabase.getInstance().getReference("posts/"+associationName).push();
         post.setId(blogRef.getKey());
         blogRef.setValue(post).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

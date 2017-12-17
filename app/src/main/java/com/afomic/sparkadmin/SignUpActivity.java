@@ -174,6 +174,7 @@ public class SignUpActivity extends AppCompatActivity {
                             String userId=task.getResult().getUser().getUid();
                             mPreferenceManager.setUserId(userId);
                             mPreferenceManager.setUserLogin(true);
+                            mPreferenceManager.setAdmin(true);
                             mPreferenceManager.setUsername(Util.getString(displayNameEditText));
                             mPreferenceManager.setAssociationName(Util.getString(associationNameEditText));
                             setUpProfile();

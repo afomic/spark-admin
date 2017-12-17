@@ -16,6 +16,7 @@ public class PreferenceManager {
     private static final String PREF_USER_NAME="username";
     private static final String PREF_ICON_URL="icon_url";
     private static final String PREF_ASSOCIATION_NAME="association";
+    private static final String PREF_ADMIN ="admin";
     private String emptyString="";
 
 
@@ -48,11 +49,19 @@ public class PreferenceManager {
         mEditor.putString(PREF_ASSOCIATION_NAME,associationName);
         mEditor.apply();
     }
+    public void setAdmin(boolean isAdmin){
+        SharedPreferences.Editor mEditor=mSharedPreferences.edit();
+        mEditor.putBoolean(PREF_ADMIN,isAdmin);
+        mEditor.apply();
+    }
     public String getUserId(){
         return mSharedPreferences.getString(PREF_USER_ID,emptyString);
     }
     public boolean isUserLogin(){
         return mSharedPreferences.getBoolean(PREF_USER_LOGIN,false);
+    }
+    public boolean isAdmin(){
+        return mSharedPreferences.getBoolean(PREF_ADMIN,false);
     }
     public String getUsername(){
         return mSharedPreferences.getString(PREF_USER_NAME,emptyString);
