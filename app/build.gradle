@@ -18,8 +18,8 @@ android {
         }
     }
 }
-ext{
-    supportVersion="26.0.2"
+ext {
+    supportVersion = "26.0.2"
 }
 
 dependencies {

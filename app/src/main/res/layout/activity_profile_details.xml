@@ -21,17 +21,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ImageView
-                android:src="@drawable/default_logo"
                 android:id="@+id/imv_profile_image"
                 android:background="@color/dividerColor"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"/>
             <LinearLayout
-
                 android:layout_marginTop="16dp"
                 android:layout_marginLeft="8dp"
                 android:layout_marginRight="8dp"
-
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -42,13 +39,20 @@
                     android:src="@drawable/ic_person"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
-                <EditText
-                    android:hint="Name"
-                    android:id="@+id/edt_name"
-                    android:inputType="textAutoComplete|textCapSentences"
+                <TextView
+                    android:padding="8dp"
+                    android:text="Afolabi Michael"
+                    android:id="@+id/tv_name"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.6dp"
+                android:background="@color/dividerColor"
+                android:layout_marginLeft="64dp"
+                />
             <LinearLayout
                 android:layout_margin="8dp"
                 android:gravity="center_vertical"
@@ -61,14 +65,20 @@
                     android:src="@drawable/ic_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
-                <EditText
-                    android:hint="Email"
-                    android:inputType="textEmailAddress"
-                    android:id="@+id/edt_email"
-
+                <TextView
+                    android:padding="8dp"
+                    android:text="afomic1@gmail.com"
+                    android:id="@+id/tv_email"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.6dp"
+                android:background="@color/dividerColor"
+                android:layout_marginLeft="64dp"
+                />
             <LinearLayout
                 android:layout_margin="8dp"
                 android:gravity="center_vertical"
@@ -81,17 +91,24 @@
                     android:src="@drawable/ic_phone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
-                <EditText
-                    android:hint="Phone Number"
-                    android:inputType="phone"
-                    android:id="@+id/edt_phone_number"
+                <TextView
+                    android:padding="8dp"
+                    android:text="08174442314"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:id="@+id/tv_phone_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.6dp"
+                android:background="@color/dividerColor"
+                android:layout_marginLeft="64dp"
+                />
 
 
             <LinearLayout
-
+                android:visibility="gone"
                 android:orientation="vertical"
                 android:id="@+id/lecturer_view"
                 android:layout_width="match_parent"
@@ -108,13 +125,20 @@
                         android:src="@drawable/degree"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
-                    <EditText
-                        android:hint="Degree e.g M.sc (ife)"
-                        android:inputType="phone"
-                        android:id="@+id/edt_lecturer_degree"
+                    <TextView
+                        android:padding="8dp"
+                        android:text="Bsc ife,Msc london"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:id="@+id/tv_lecturer_degree"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.6dp"
+                    android:background="@color/dividerColor"
+                    android:layout_marginLeft="64dp"
+                    />
                 <LinearLayout
                     android:layout_margin="8dp"
                     android:gravity="center_vertical"
@@ -127,13 +151,19 @@
                         android:src="@drawable/area"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
-                    <EditText
-                        android:hint="Area of specialization"
-                        android:inputType="textCapWords"
-                        android:id="@+id/edt_lecturer_specialization_area"
+                    <TextView
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:id="@+id/tv_lecturer_specialization_area"
                         android:layout_width="match_parent"
+                        android:padding="8dp"
+                        android:text="Failing Student"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.6dp"
+                    android:background="@color/dividerColor"
+                    android:layout_marginLeft="64dp"/>
                 <LinearLayout
                     android:layout_margin="8dp"
                     android:gravity="center_vertical"
@@ -146,13 +176,21 @@
                         android:src="@drawable/ic_home"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
-                    <EditText
-                        android:hint="Room Number"
+                    <TextView
+                        android:text="402"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:padding="8dp"
                         android:inputType="numberDecimal"
-                        android:id="@+id/edt_lecturer_room_number"
+                        android:id="@+id/tv_lecturer_room_number"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.6dp"
+                    android:background="@color/dividerColor"
+                    android:layout_marginLeft="64dp"
+                    />
 
 
 
@@ -160,7 +198,6 @@
 
             </LinearLayout>
             <LinearLayout
-                android:visibility="gone"
                 android:id="@+id/exco_view"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -177,13 +214,20 @@
                         android:src="@drawable/level"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
-                    <EditText
-                        android:hint="Level e.g 400"
+                    <TextView
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:text="400"
+                        android:padding="8dp"
                         android:layout_width="match_parent"
-                        android:id="@+id/edt_executive_level"
-                        android:inputType="numberDecimal"
+                        android:id="@+id/tv_executive_level"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.6dp"
+                    android:background="@color/dividerColor"
+                    android:layout_marginLeft="64dp"
+                    />
                 <LinearLayout
                     android:layout_margin="8dp"
                     android:gravity="center_vertical"
@@ -196,27 +240,34 @@
                         android:src="@drawable/ic_position"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
-                    <EditText
-                        android:hint="Position"
-                        android:id="@+id/edt_executive_position"
-                        android:inputType="textAutoComplete|textCapSentences"
-                      android:layout_width="match_parent"
+                    <TextView
+                        android:padding="8dp"
+                        android:text="President"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                        android:id="@+id/tv_executive_position"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
                 </LinearLayout>
 
 
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.6dp"
+                android:background="@color/dividerColor"
+                android:layout_marginLeft="64dp"
+                />
 
         </LinearLayout>
     </ScrollView>
     <android.support.design.widget.FloatingActionButton
-        android:src="@drawable/ic_camera"
+        android:src="@drawable/ic_phone"
         android:background="@color/colorWhite"
         app:backgroundTint="@color/colorWhite"
         app:layout_anchorGravity="right|bottom"
         app:layout_anchor="@id/imv_profile_image"
         app:fabSize="normal"
-        android:id="@+id/fab_image"
+        android:id="@+id/fab_call"
         android:layout_margin="8dp"
         android:layout_alignBottom="@id/imv_profile_image"
         android:layout_width="wrap_content"

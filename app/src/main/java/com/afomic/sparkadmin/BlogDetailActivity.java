@@ -1,6 +1,8 @@
 package com.afomic.sparkadmin;
 
 import android.content.Context;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -12,6 +14,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ProgressBar;
 
 import com.afomic.sparkadmin.adapter.BlogDisplayAdapter;
@@ -19,6 +23,7 @@ import com.afomic.sparkadmin.model.BlogElement;
 import com.afomic.sparkadmin.model.BlogPost;
 import com.afomic.sparkadmin.data.Constant;
 import com.afomic.sparkadmin.util.ElementParser;
+import com.afomic.sparkadmin.util.HidingScrollLinearListener;
 
 import java.util.ArrayList;
 
@@ -33,6 +38,9 @@ public class BlogDetailActivity extends AppCompatActivity
     RecyclerView blogView;
     @BindView(R.id.progress_bar)
     ProgressBar mProgressBar;
+    @BindView(R.id.fab_like)
+    FloatingActionButton likeFab;
+    LinearLayoutManager mLayoutManager;
 
     BlogPost mBlogPost;
 
@@ -66,6 +74,27 @@ public class BlogDetailActivity extends AppCompatActivity
         } else {
             mLoadManager.restartLoader(BLOG_ELEMENT_LOADER_ID, args, this);
         }
+
+        mLayoutManager=new LinearLayoutManager(this);
+        blogView.addOnScrollListener(new HidingScrollLinearListener(mLayoutManager) {
+            @Override
+            public void onHide() {
+                CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) likeFab.getLayoutParams();
+                int fabBottomMargin = lp.bottomMargin;
+                likeFab.animate().translationY(likeFab.getHeight() + fabBottomMargin).setInterpolator(new AccelerateInterpolator(2)).start();
+            }
+
+            @Override
+            public void onShow() {
+                likeFab.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
+
+            }
+
+            @Override
+            public void onLoadMore(int current_page) {
+
+            }
+        });
 
     }
 

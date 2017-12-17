@@ -1,6 +1,7 @@
 package com.afomic.sparkadmin.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
+import com.afomic.sparkadmin.ProfileDetailsActivity;
 import com.afomic.sparkadmin.R;
+import com.afomic.sparkadmin.data.Constant;
 import com.afomic.sparkadmin.model.Profile;
 import com.afomic.sparkadmin.util.GlideApp;
 
@@ -85,16 +88,10 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.Holder> {
 
         @Override
         public void onClick(View v) {
-//            Intent intent = null;
-//            Profile item=getItem(getAdapterPosition());
-//            if (item.getType()==Profile.Type.LECTURER) {
-//                intent = new Intent(context, LecturerDetail.class);
-//            } else {
-//                intent = new Intent(context, ExcoViewerActivity.class);
-//            }
-//
-//            intent.putExtra(Constant.EXTRA_PROFILE,item);
-//            context.startActivity(intent);
+            Profile item=getItem(getAdapterPosition());
+            Intent intent=new Intent(context, ProfileDetailsActivity.class);
+            intent.putExtra(Constant.EXTRA_PROFILE,item);
+            context.startActivity(intent);
         }
     }
 

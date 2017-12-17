@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.afomic.sparkadmin">
+
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
         android:name=".SparkAdmin"
         android:allowBackup="true"
@@ -25,7 +27,6 @@
         <activity android:name=".NewFilePostActivity">
         </activity>
         <activity android:name=".LoginActivity">
-
         </activity>
         <activity android:name=".SignUpActivity">
         </activity>
@@ -42,6 +43,9 @@
             android:name=".CsvParserIntentService"
             android:exported="false">
         </service>
+
+        <activity android:name=".ProfileDetailsActivity">
+        </activity>
     </application>
 
 </manifest>

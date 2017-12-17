@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -104,49 +105,6 @@ public class CreateProfileActivity extends AppCompatActivity {
         mStorageReference= FirebaseStorage.getInstance().getReference("profile/nacoss");
 
     }
-    @OnClick(R.id.btn_create_profile)
-    public void createProfile(){
-        if(isValidForm()){
-            mProgressDialog.show();
-            if(imageUri!=null){
-                UploadTask logoUpload=mStorageReference
-                        .child(imageUri.getLastPathSegment())
-                        .putFile(imageUri);
-                logoUpload.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                        if(task.isSuccessful()){
-                            String pictureUrl=task.getResult().getDownloadUrl().toString();
-                            Profile profile=getProfile();
-                            profile.setPictureUrl(pictureUrl);
-                            String id=mDatabaseReference.push().getKey();
-                            profile.setId(id);
-                            mDatabaseReference.child(id).setValue(profile);
-                            mProgressDialog.dismiss();
-                            finish();
-                        }else {
-                            mProgressDialog.dismiss();
-                            finish();
-                            Toast.makeText(CreateProfileActivity.this,
-                                    "Failed to upload",
-                                    Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-                });
-
-            }else {
-                Profile profile=getProfile();
-                String id=mDatabaseReference.push().getKey();
-                profile.setId(id);
-                mDatabaseReference.child(id).setValue(profile);
-                mProgressDialog.dismiss();
-                finish();
-            }
-
-        }
-
-    }
     @OnClick(R.id.fab_image)
     public void selectImage(){
         CropImage.activity()
@@ -212,6 +170,7 @@ public class CreateProfileActivity extends AppCompatActivity {
                 imageUri = result.getUri();
                 GlideApp.with(CreateProfileActivity.this)
                         .load(imageUri)
+                        .centerCrop()
                         .placeholder(R.drawable.image_placeholder)
                         .into(profileImage);
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
@@ -222,9 +181,55 @@ public class CreateProfileActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_create_profile,menu);
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId()==android.R.id.home){
             finish();
+        }else if(item.getItemId()==R.id.menu_create_profile){
+            if(isValidForm()){
+                mProgressDialog.show();
+                if(imageUri!=null){
+                    UploadTask logoUpload=mStorageReference
+                            .child(imageUri.getLastPathSegment())
+                            .putFile(imageUri);
+                    logoUpload.addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                            if(task.isSuccessful()){
+                                String pictureUrl=task.getResult().getDownloadUrl().toString();
+                                Profile profile=getProfile();
+                                profile.setPictureUrl(pictureUrl);
+                                String id=mDatabaseReference.push().getKey();
+                                profile.setId(id);
+                                mDatabaseReference.child(id).setValue(profile);
+                                mProgressDialog.dismiss();
+                                finish();
+                            }else {
+                                mProgressDialog.dismiss();
+                                finish();
+                                Toast.makeText(CreateProfileActivity.this,
+                                        "Failed to upload",
+                                        Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+                    });
+
+                }else {
+                    Profile profile=getProfile();
+                    String id=mDatabaseReference.push().getKey();
+                    profile.setId(id);
+                    mDatabaseReference.child(id).setValue(profile);
+                    mProgressDialog.dismiss();
+                    finish();
+                }
+
+            }
         }
         return super.onOptionsItemSelected(item);
     }

@@ -34,6 +34,7 @@ public class PersonViewerFragment extends Fragment {
     private static final String BUNDLE_TYPE="type";
     ArrayList<Profile> mProfiles;
     DatabaseReference profileRef;
+    PersonAdapter adapter;
 
 
     public static PersonViewerFragment getInstance(int type){
@@ -63,7 +64,7 @@ public class PersonViewerFragment extends Fragment {
         grid.setItemAnimator(new DefaultItemAnimator());
 
         mProfiles=new ArrayList<>();
-        final PersonAdapter adapter=new PersonAdapter(getActivity(),mProfiles);
+        adapter=new PersonAdapter(getActivity(),mProfiles);
 
         grid.setAdapter(adapter);
 
