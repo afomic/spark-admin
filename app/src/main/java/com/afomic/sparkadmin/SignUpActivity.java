@@ -1,12 +1,18 @@
 package com.afomic.sparkadmin;
 
+import android.*;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -72,6 +78,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         ButterKnife.bind(this);
+        
         mPreferenceManager=new PreferenceManager(this);
         int signUpType=getIntent().getIntExtra(Constant.EXTRA_SIGN_UP_TYPE,0);
         if(signUpType==Constant.TYPE_MAIL_AND_PASSWORD){
@@ -81,6 +88,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         mProgressDialog =new ProgressDialog(this);
         mProgressDialog.setCancelable(false);
+        requestPermission();
     }
     @OnClick(R.id.fab_image)
     public void selectImage(){
@@ -268,5 +276,18 @@ public class SignUpActivity extends AppCompatActivity {
         Intent intent=new Intent(SignUpActivity.this,MainActivity.class);
         startActivity(intent);
         finish();
+    }
+    public void requestPermission(){
+        if(Build.VERSION.SDK_INT>Build.VERSION_CODES.LOLLIPOP){
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) !=
+                    PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[] {
+                                android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        },100);
+            }
+        }
+
+
     }
 }

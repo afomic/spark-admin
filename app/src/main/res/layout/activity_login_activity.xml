@@ -1,35 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/backgroundColor"
+    android:layout_height="wrap_content"
+    android:background="@drawable/blurry"
     tools:context="com.afomic.sparkadmin.LoginActivity">
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_margin="8dp"
-        android:background="@drawable/white_rectangle"
-        android:text="Sign Up"
-        android:id="@+id/btn_sign_up"
-        android:textColor="@color/colorWhite"
-        android:textStyle="bold"/>
-
     <LinearLayout
+        android:orientation="vertical"
+        android:fitsSystemWindows="true"
+        android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
-
+        android:layout_height="wrap_content">
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/lighting"/>
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -39,56 +26,60 @@
             android:text="Igniting The Genius in You"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textStyle="italic"/>
-
         <EditText
             android:id="@+id/edt_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="Email"
+            android:drawablePadding="8dp"
+            android:maxLines="1"
+            android:drawableLeft="@drawable/ic_user"
+            android:background="@drawable/edit_text_normal"
             android:layout_marginBottom="8dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/edit_text_normal"
-            android:hint="Email"
-            android:maxLines="1"
-            android:inputType="textEmailAddress"
-            android:padding="8dp"/>
-
+            android:padding="8dp"
+            android:inputType="textEmailAddress"/>
         <EditText
             android:id="@+id/edt_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:hint="Password"
+            android:drawableLeft="@drawable/ic_password"
+            android:drawablePadding="8dp"
+            android:background="@drawable/edit_text_normal"
+            android:layout_marginBottom="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginTop="8dp"
-            android:background="@drawable/edit_text_normal"
-            android:hint="Password"
+            android:padding="8dp"
             android:maxLines="1"
-            android:inputType="textPassword"
-            android:padding="8dp"/>
+            android:inputType="textPassword"/>
 
         <Button
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginTop="8dp"
-            android:text="Login"/>
-
-        <com.google.android.gms.common.SignInButton
-            android:id="@+id/google_sign_button"
+            android:layout_margin="16dp"
+            android:background="#79050d3f"
+            android:text="Login"
+            android:textColor="@color/colorWhite"/>
+        <Button
+            android:text="Sign Up"
+            android:id="@+id/btn_sign_up"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="8dp"
             android:layout_marginLeft="16dp"
+            android:textColor="@color/colorWhite"
+            android:background="#79050d3f"
             android:layout_marginRight="16dp"
             android:layout_marginTop="8dp"/>
+
     </LinearLayout>
 
 
-</RelativeLayout>
+</ScrollView>

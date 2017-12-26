@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.afomic.sparkadmin.data.PreferenceManager;
@@ -105,7 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                         Admin admin=dataSnapshot.getValue(Admin.class);
                         mProgressDialog.dismiss();
                         if(admin==null){
-                            Util.makeToast(LoginActivity.this,"Invalid");
+                            Util.makeToast(LoginActivity.this,"Invalid Profile");
                         }else {
                             mPreferenceManager.setAssociationName(admin.getAssociationName());
                             mPreferenceManager.setUsername(admin.getDisplayName());

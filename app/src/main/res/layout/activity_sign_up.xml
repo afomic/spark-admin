@@ -3,11 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/backgroundColor"
+    android:background="@drawable/blurry"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent">
     <LinearLayout
         android:orientation="vertical"
+        android:layout_gravity="center"
+        android:fitsSystemWindows="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <RelativeLayout
@@ -98,9 +100,8 @@
             android:layout_gravity="center_horizontal"
             android:layout_margin="8dp"
             android:textColor="@color/colorWhite"
+            android:background="#79050d3f"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
             android:text="Sign Up"/>
     </LinearLayout>
 </ScrollView>
-
