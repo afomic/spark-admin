@@ -45,11 +45,16 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.Holder> {
                 .placeholder(R.drawable.image_placeholder)
                 .into(holder.personPicture);
         holder.personName.setText(item.getName());
-        holder.background.setBackgroundColor(item.getColor());
         if(item.getType()==Profile.Type.EXCO){
             holder.personDescription.setText(item.getPost());
+            holder.background.setBackgroundColor(context.getResources().getColor(R.color.executiveBackgroundColor));
         }else {
             holder.personDescription.setText(item.getRoomNumber());
+            if(item.getType()==Profile.Type.LECTURER){
+                holder.background.setBackgroundColor(context.getResources().getColor(R.color.lecturerBackgroundColor));
+            }else {
+                holder.background.setBackgroundColor(context.getResources().getColor(R.color.parliamentBackgroundColor));
+            }
         }
 
     }

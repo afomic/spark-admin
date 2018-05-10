@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afomic.sparkadmin.data.PreferenceManager;
 import com.afomic.sparkadmin.model.BlogPost;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,6 +39,7 @@ public class NewFilePostActivity extends AppCompatActivity {
     DatabaseReference mFirebaseDatabase;
     public static final int FILE_REQUEST_CODE=101;
     Toolbar mToolbar;
+    private PreferenceManager mPreferenceManager;
 
     private ProgressDialog mProgressDialog;
     @Override
@@ -52,6 +54,7 @@ public class NewFilePostActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle("New File Post");
         }
+        mPreferenceManager=new PreferenceManager(this);
 
         fileTitleEditText=(EditText) findViewById(R.id.edt_file_title);
         fileTypeSpinner=(Spinner) findViewById(R.id.spn_file_type);
@@ -59,7 +62,10 @@ public class NewFilePostActivity extends AppCompatActivity {
         selectFileButton=(Button) findViewById(R.id.btn_select_file);
         fileNameTextView=(TextView) findViewById(R.id.tv_file_name);
 
-        mFirebaseDatabase=FirebaseDatabase.getInstance().getReference().child("blog");
+        mFirebaseDatabase=FirebaseDatabase.getInstance()
+                .getReference("posts")
+                .child(mPreferenceManager.getAssociationName())
+                .push();
         mFirebaseStorage=FirebaseStorage.getInstance().getReference();
 
         fileTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -77,7 +83,9 @@ public class NewFilePostActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent fileIntent=new Intent(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(fileIntent,FILE_REQUEST_CODE);
+                fileIntent.setType("*/*");
+                Intent i = Intent.createChooser(fileIntent, "Select File for upload");
+                startActivityForResult(i,FILE_REQUEST_CODE);
             }
         });
 

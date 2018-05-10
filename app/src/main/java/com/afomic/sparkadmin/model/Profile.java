@@ -22,10 +22,10 @@ public class Profile implements Parcelable{
     private int type;
     private String pictureUrl;
     private String id;
-    private int color;
+
 
     public Profile(){
-        color = ColorGenerator.MATERIAL.getRandomColor();
+
     }
 
     protected Profile(Parcel in) {
@@ -42,13 +42,6 @@ public class Profile implements Parcelable{
         id = in.readString();
     }
 
-    public int getColor() {
-        return color;
-    }
-
-    public void setColor(int color) {
-        this.color = color;
-    }
 
     public static final Creator<Profile> CREATOR = new Creator<Profile>() {
         @Override

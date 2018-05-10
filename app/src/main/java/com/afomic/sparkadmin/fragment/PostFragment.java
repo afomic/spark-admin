@@ -107,9 +107,11 @@ public class PostFragment extends Fragment implements PostAdapter.BlogPostListen
             }
         });
 
-        DatabaseReference mDatabaseReference= FirebaseDatabase.getInstance().getReference().child("blog");
+        DatabaseReference mDatabaseReference= FirebaseDatabase.getInstance()
+                .getReference("posts")
+                .child(mPreferenceManager.getAssociationName());
         mDatabaseReference.orderByChild("status")
-                .equalTo(Constant.STATUS_UNAPPROVED)
+                .equalTo(Constant.STATUS_APPROVED)
                 .addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {

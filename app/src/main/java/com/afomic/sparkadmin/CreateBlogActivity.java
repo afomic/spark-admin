@@ -243,8 +243,11 @@ public class CreateBlogActivity extends AppCompatActivity implements
     }
     public void uploadPost(BlogPost post){
         String associationName=mPreferenceManager.getAssociationName();
-        DatabaseReference blogRef=
-        FirebaseDatabase.getInstance().getReference("posts/"+associationName).push();
+        DatabaseReference blogRef= FirebaseDatabase.getInstance()
+                .getReference("posts")
+                .child(associationName)
+                .push();
+
         post.setId(blogRef.getKey());
         blogRef.setValue(post).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -283,7 +286,7 @@ public class CreateBlogActivity extends AppCompatActivity implements
         post.setBody(postBody);
         post.setTitle(title);
         post.setPosterName(mPreferenceManager.getUsername());
-        post.setPictureUrl(mPreferenceManager.getIconUrl());
+        post.setPosterIconUrl(mPreferenceManager.getIconUrl());
         post.setType(BlogPost.Type.BLOG);
         post.setStatus(STATUS_APPROVED);
         mProgressDialog.show();

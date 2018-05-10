@@ -1,23 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<color name="colorPrimary">#03A9F4</color>
-<color name="colorPrimaryDark">#0288D1</color>
-<color name="colorAccent">#4c4c4c</color>
-<color name="dividerColor">#BDBDBD</color>
-<color name="backgroundColor">#8c8efe</color>
-<color name="colorBlack">#FF000000</color>
-<color name="colorWhite">#FFF</color>
-<color name="textColor">#c8000000</color>
-<color name="album_title">#4c4c4c</color>
-<color name="viewBg">#f1f5f8</color>
-<color name="translucent_scrim_top">#26000000</color>
-<color name="translucent_scrim_top_center">#0c000000</color>
-<color name="translucent_scrim_bottom">#2a000000</color>
-<color name="translucent_scrim_bottom_center">#42212121</color>
+    <color name="colorPrimary">#03A9F4</color>
+    <color name="colorPrimaryDark">#0288D1</color>
+    <color name="colorAccent">#4c4c4c</color>
+    <color name="dividerColor">#BDBDBD</color>
+    <color name="backgroundColor">#8c8efe</color>
+    <color name="colorBlack">#FF000000</color>
+    <color name="colorWhite">#FFF</color>
+    <color name="textColor">#c8000000</color>
+    <color name="album_title">#4c4c4c</color>
+    <color name="viewBg">#f1f5f8</color>
+    <color name="translucent_scrim_top">#26000000</color>
+    <color name="translucent_scrim_top_center">#0c000000</color>
+    <color name="translucent_scrim_bottom">#2a000000</color>
+    <color name="translucent_scrim_bottom_center">#42212121</color>
+    <color name="executiveBackgroundColor">#4682B4</color>
+    <color name="lecturerBackgroundColor">#0E4D92</color>
+    <color name="parliamentBackgroundColor">#2278d4</color>
 
 
 
-<!-- Screens background color-->
+    <!-- Screens background color-->
 <color name="bg_screen1">#f64c73</color>
 <color name="bg_screen2">#20d2bb</color>
 <color name="bg_screen3">#3395ff</color>
